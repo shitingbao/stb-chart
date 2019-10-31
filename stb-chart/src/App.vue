@@ -1,13 +1,36 @@
 <template>
   <div id="app">
     <div id="nav">
-      <router-link to="/">Home</router-link> |
+      <router-link to="/">Home</router-link>|
       <router-link to="/about">About</router-link>
+      <button @click="getMsg()">click</button>
     </div>
     <router-view />
   </div>
 </template>
-
+<script>
+// import axios from "axois";
+export default {
+  methods: {
+    show: function(msg) {
+      console.log(this.showMsg + msg);
+    },
+    getMsg: function() {
+      console.log("start get");
+      let that = this;
+      //get请求
+      that.$http
+        .get("http://localhost:8088/")
+        .then(res => {
+          console.log("this data is:", res);
+        }) //执行成功后执行，res为反馈的数据
+        .catch(function(err) {
+          console.log("this error is:", err);
+        }); //失败后执行的逻辑
+    }
+  }
+};
+</script>
 <style lang="scss">
 #app {
   font-family: "Avenir", Helvetica, Arial, sans-serif;
