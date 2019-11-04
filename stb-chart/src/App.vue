@@ -4,6 +4,7 @@
       <router-link to="/">Home</router-link>|
       <router-link to="/about">About</router-link>
       <button @click="getMsg()">click</button>
+      <button @click="contentMes()">content</button>
     </div>
     <router-view />
   </div>
@@ -27,6 +28,9 @@ export default {
         .catch(function(err) {
           console.log("this error is:", err);
         }); //失败后执行的逻辑
+    },
+    contentMes: function() {
+      this.$conMsg("123");
     }
   }
 };

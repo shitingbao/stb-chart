@@ -3,6 +3,9 @@ import App from './App.vue';
 import router from './router';
 import store from './store';
 import axios from 'axios';
+import { con } from './content';
+
+Vue.prototype.$conMsg = con;
 
 Vue.prototype.$http = axios;
 Vue.config.productionTip = false;
