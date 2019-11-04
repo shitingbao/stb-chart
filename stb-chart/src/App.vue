@@ -2,8 +2,12 @@
   <div id="app">
     <div id="nav">
       <router-link to="/">Home</router-link>|
-      <router-link to="/about">About</router-link>
-      <button @click="getMsg()">click</button>
+      <router-link to="/about">About</router-link>|
+      <router-link to="/chart">About</router-link>
+      <br />
+      <!-- get请求测试 -->
+      <button @click="getMsg()">getclicktest</button>
+      <!-- 外部js方法测试 -->
       <button @click="contentMes()">content</button>
     </div>
     <router-view />
