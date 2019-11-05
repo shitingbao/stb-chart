@@ -1,23 +1,22 @@
 var websock = null;
 var global_callback = null;
-var serverPort = '5000'; //webSocket连接端口
 
-function getWebIP() {
-	var curIP = window.location.hostname;
-	return curIP;
-}
+var host = 'localhost:8088/sockets/load';
 
 function initWebSocket() {
 	//初始化weosocket
 	//ws地址
-	var wsuri = 'ws://' + getWebIP() + ':' + serverPort;
+	var wsuri = 'ws://' + host;
 	websock = new WebSocket(wsuri);
+
 	websock.onmessage = function(e) {
 		websocketonmessage(e);
 	};
+
 	websock.onclose = function(e) {
 		websocketclose(e);
 	};
+
 	websock.onopen = function() {
 		websocketOpen();
 	};
