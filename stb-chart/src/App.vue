@@ -3,7 +3,7 @@
     <div id="nav">
       <router-link to="/">Home</router-link>|
       <router-link to="/about">About</router-link>|
-      <router-link to="/chart">About</router-link>
+      <router-link to="/chart">chart</router-link>
       <br />
       <!-- get请求测试 -->
       <button @click="getMsg()">getclicktest</button>

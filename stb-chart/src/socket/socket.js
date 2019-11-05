@@ -1,11 +1,9 @@
 var websock = null;
 var global_callback = null;
 
-var host = 'localhost:8088/sockets/load';
+var host = 'localhost:8088/sockets/stb';
 
 function initWebSocket() {
-	//初始化weosocket
-	//ws地址
 	var wsuri = 'ws://' + host;
 	websock = new WebSocket(wsuri);
 
@@ -61,7 +59,7 @@ function websocketclose(e) {
 	console.log('connection closed (' + e.code + ')');
 }
 
-function websocketOpen(e) {
+function websocketOpen() {
 	console.log('连接成功');
 }
 
