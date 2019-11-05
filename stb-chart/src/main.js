@@ -9,7 +9,7 @@ import { sendSock } from './socket/socket';
 
 Vue.prototype.$echarts = echarts;
 Vue.prototype.$conMsg = con;
-Vue.prototype.$ws = sendSock;
+Vue.prototype.$wsSend = sendSock;
 Vue.prototype.$http = axios;
 Vue.config.productionTip = false;
 

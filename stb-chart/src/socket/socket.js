@@ -1,5 +1,4 @@
 var websock = null;
-var global_callback = null;
 
 var host = 'localhost:8088/sockets/stb';
 
@@ -8,7 +7,7 @@ function initWebSocket() {
 	websock = new WebSocket(wsuri);
 
 	websock.onmessage = function(e) {
-		websocketonmessage(e);
+		console.log('接收的数据为：', e.data);
 	};
 
 	websock.onclose = function(e) {
@@ -26,27 +25,21 @@ function initWebSocket() {
 }
 
 // 实际调用的方法
-function sendSock(agentData, callback) {
-	global_callback = callback;
+function sendSock(agentData) {
 	if (websock.readyState === websock.OPEN) {
 		//若是ws开启状态
 		websocketsend(agentData);
 	} else if (websock.readyState === websock.CONNECTING) {
 		// 若是 正在开启状态，则等待1s后重新调用
 		setTimeout(function() {
-			sendSock(agentData, callback);
+			sendSock(agentData);
 		}, 1000);
 	} else {
 		// 若未开启 ，则等待1s后重新调用
 		setTimeout(function() {
-			sendSock(agentData, callback);
+			sendSock(agentData);
 		}, 1000);
 	}
-}
-
-//数据接收
-function websocketonmessage(e) {
-	global_callback(JSON.parse(e.data));
 }
 
 //数据发送

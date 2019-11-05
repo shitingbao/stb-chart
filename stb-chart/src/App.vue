@@ -9,6 +9,7 @@
       <button @click="getMsg()">getclicktest</button>
       <!-- 外部js方法测试 -->
       <button @click="contentMes()">content</button>
+      <button @click="wsSendData()">wsSendData</button>
     </div>
     <router-view />
   </div>
@@ -17,6 +18,9 @@
 // import axios from "axois";
 export default {
   methods: {
+    wsSendData() {
+      this.$wsSend("my name is shitingbao");
+    },
     show: function(msg) {
       console.log(this.showMsg + msg);
     },
