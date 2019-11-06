@@ -3,13 +3,15 @@
     <div id="nav">
       <router-link to="/">Home</router-link>|
       <router-link to="/about">About</router-link>|
-      <router-link to="/chart">chart</router-link>
+      <router-link to="/chart">chart</router-link>|
+      <router-link to="/table">table</router-link>
       <br />
       <!-- get请求测试 -->
       <button @click="getMsg()">getclicktest</button>
       <!-- 外部js方法测试 -->
       <button @click="contentMes()">content</button>
       <button @click="wsSendData()">wsSendData</button>
+      <el-button>Default</el-button>
     </div>
     <router-view />
   </div>
@@ -27,6 +29,17 @@ export default {
     getMsg: function() {
       console.log("start get");
       let that = this;
+      that
+        .$http({
+          method: "GET",
+          url: `/api/bind/index`,
+          headers: {
+            "Content-Type": "application/x-www-form-urlencoded"
+          }
+        })
+        .then(function(e) {
+          console.log("data", e);
+        });
       //get请求
       that.$http
         .get("http://localhost:8088/")
