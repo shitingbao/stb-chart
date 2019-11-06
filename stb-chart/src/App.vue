@@ -20,26 +20,15 @@
 // import axios from "axois";
 export default {
   methods: {
-    wsSendData() {
-      this.$wsSend("my name is shitingbao");
-    },
+    // wsSendData() {
+    //   this.$wsSend("my name is shitingbao");
+    // },
     show: function(msg) {
       console.log(this.showMsg + msg);
     },
     getMsg: function() {
       console.log("start get");
       let that = this;
-      that
-        .$http({
-          method: "GET",
-          url: `/api/bind/index`,
-          headers: {
-            "Content-Type": "application/x-www-form-urlencoded"
-          }
-        })
-        .then(function(e) {
-          console.log("data", e);
-        });
       //get请求
       that.$http
         .get("http://localhost:8088/")
