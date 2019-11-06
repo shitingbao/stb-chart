@@ -40,7 +40,6 @@
 
       <el-button class="void" @click="find">查询</el-button>
       <el-button class="void" @click="cancle">取消</el-button>
-      <button @click="show">show</button>
     </div>
 
     <div class="tb">
@@ -62,12 +61,12 @@
 export default {
   data() {
     return {
-      inputData: "",
+      inputData: "", //保存用户输入
       test: null,
-      tableData: [],
-      showTableData: [],
-      columnvalue: "",
-      conditionvalue: "",
+      tableData: [], //保存表内所有数据，不参与展示
+      showTableData: [], //保存表内用来显示的数据
+      columnvalue: "", //选择的列名称
+      conditionvalue: "", //选择的条件
       columnoptions: [
         {
           value: "dis",
@@ -105,7 +104,7 @@ export default {
           value: "online",
           label: "online"
         }
-      ],
+      ], //列对应关系
       conditionoptions: [
         {
           value: "equal",
@@ -119,22 +118,26 @@ export default {
           value: "!",
           label: "无"
         }
-      ],
-      comparisonVal: ""
+      ], //条件对应关系
+      comparisonVal: "" //对应关系比较值
     };
   },
   methods: {
+    //测试展示
     show: function() {
       console.log("column:", this.columnvalue);
       console.log("condition:", this.conditionvalue);
       console.log("value:", this.inputData);
     },
+    //取消恢复初始，去除所有条件，展示所有数据
     cancle: function() {
       this.showTableData = this.tableData;
     },
+    //下拉选框选择触发
     selectData: function(value) {
       console.log("your select option is:", value);
     },
+    //请求取值，获取表内所有数据，init获取
     getMsg: function() {
       let that = this;
       //   get请求;
@@ -155,7 +158,7 @@ export default {
           console.log("this error is:", err);
         }); //失败后执行的逻辑;
     },
-
+    //获取用户输入的列名称和条件，筛选展示数据
     find: function() {
       if (this.columnvalue === "") {
         alert("please a column");
@@ -251,7 +254,6 @@ export default {
     }
   },
   created: function() {
-    //相当于刚开始执行的函数
     this.getMsg();
   }
 };
