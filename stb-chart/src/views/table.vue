@@ -61,7 +61,7 @@
         </el-table-column>
       </el-table>
     </div>
-    <Chart msg="Welcome to Your Vue.js App" />
+    <Chart v-if="isHideChild" v-bind:msg="sendChildData" @getChildData="showChild" />
   </div>
 </template>
 <script  lang='ts'>
@@ -74,6 +74,8 @@ export default {
   },
   data() {
     return {
+      sendChildData: "123",
+      isHideChild: false,
       resData: "",
       inputData: "", //保存用户输入
       test: null,
@@ -139,7 +141,13 @@ export default {
   methods: {
     //测试展示
     handleClick(row) {
-      console.log(row);
+      this.sendChildData = row.dis;
+      this.isHideChild = true;
+      console.log(row.dis);
+    },
+    showChild: function(e) {
+      this.isHideChild = false;
+      console.log(e);
     },
     show: function() {
       console.log("column:", this.columnvalue);
@@ -163,7 +171,7 @@ export default {
           method: "GET",
           url: `https://api.imowfms.com/web/dis/list`,
           headers: {
-            token: "62f80fdb90a9f766b7fa3294c4dab443"
+            token: "5dbfc265f6f1f8bce57b37b398f632dd"
           }
         })
         .then(function(e) {

@@ -1,6 +1,8 @@
 <template>
   <div class>
-    <h1>{{ msg }}</h1>
+    <el-button class="void" @click="sendParaent">收起</el-button>
+    <button @click="getMsg">show</button>
+    <div id="myChart" :style="{width: '800px', height: '500px'}"></div>
   </div>
 </template>
 
@@ -9,6 +11,74 @@ export default {
   name: "Chart",
   props: {
     msg: String
+  },
+  data() {
+    return {
+      option: {
+        xAxis: {
+          type: "category",
+          data: []
+        },
+        yAxis: {
+          type: "value"
+        },
+        series: [
+          {
+            data: [],
+            type: "line"
+          }
+        ]
+      }
+    };
+  },
+  mounted() {
+    this.drawLine();
+  },
+  methods: {
+    sendParaent: function() {
+      this.$emit("getChildData", "我是父组件！");
+    },
+    drawLine: function() {
+      // 基于准备好的dom，初始化echarts实例
+      let myChart = this.$echarts.init(document.getElementById("myChart"));
+
+      myChart.setOption(this.option);
+      //   console.log("data:", this.option);
+    },
+    //请求取值，获取表内所有数据，init获取
+    getMsg: function() {
+      console.log("this dis is:", this.msg);
+      let that = this;
+      //   get请求;
+      that
+        .$http({
+          method: "GET",
+          params: {
+            dis: that.msg,
+            start: "2019-07-10 15:58:05",
+            stop: "2019-07-10 16:00:28",
+            chart: "motor_cur",
+            control: "control_tr2"
+          },
+          url: `https://api.imowfms.com/web/dis/chart/data`,
+          headers: {
+            token: "5dbfc265f6f1f8bce57b37b398f632dd"
+          }
+        })
+        .then(function(res) {
+          //   console.log("this res is:", res.data);
+          //   console.log("this res is:", res.datetime);
+          //   console.log("this res is:", res.getdata);
+
+          res.data.array.foreach(element => {
+            this.option.xAxis.data.push(element.getdata);
+            this.option.series.data.push(element.datetime);
+          });
+        })
+        .catch(function(err) {
+          console.log("this error is:", err);
+        }); //失败后执行的逻辑;
+    }
   }
 };
 </script>
