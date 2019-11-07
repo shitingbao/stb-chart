@@ -40,27 +40,41 @@
 
       <el-button class="void" @click="find">查询</el-button>
       <el-button class="void" @click="cancle">取消</el-button>
+      <el-button class="void" @click="show">show</el-button>
     </div>
 
-    <div class="tb">
-      <el-table :data="showTableData" style="width: 100%">
-        <el-table-column prop="dis" label="dis"></el-table-column>
+    <div class="el">
+      <el-table :data="showTableData" stripe height="650" class="el-table">
+        <el-table-column prop="dis" label="dis" width="150"></el-table-column>
         <el-table-column prop="alias" label="alias"></el-table-column>
         <el-table-column prop="company" label="company"></el-table-column>
         <el-table-column prop="department" label="department"></el-table-column>
         <el-table-column prop="crd_no" label="crd_no"></el-table-column>
         <el-table-column prop="truck_no" label="truck_no"></el-table-column>
         <el-table-column prop="truck_type" label="truck_type"></el-table-column>
-        <el-table-column prop="last_conn" label="last_conn"></el-table-column>
-        <el-table-column prop="online" label="online"></el-table-column>
+        <el-table-column prop="last_conn" label="last_conn" width="180"></el-table-column>
+        <el-table-column prop="online" label="online" width="70"></el-table-column>
+        <el-table-column fixed="right" label="操作" width="100">
+          <template slot-scope="scope">
+            <el-button @click="handleClick(scope.row)" type="text" size="small">查看</el-button>
+          </template>
+        </el-table-column>
       </el-table>
     </div>
+    <Chart msg="Welcome to Your Vue.js App" />
   </div>
 </template>
-<script lang='ts'>
+<script  lang='ts'>
+import Chart from "../components/Chart.vue";
+
 export default {
+  name: "bg",
+  components: {
+    Chart
+  },
   data() {
     return {
+      resData: "",
       inputData: "", //保存用户输入
       test: null,
       tableData: [], //保存表内所有数据，不参与展示
@@ -124,6 +138,9 @@ export default {
   },
   methods: {
     //测试展示
+    handleClick(row) {
+      console.log(row);
+    },
     show: function() {
       console.log("column:", this.columnvalue);
       console.log("condition:", this.conditionvalue);
@@ -265,11 +282,11 @@ export default {
   align-items: center;
   flex-direction: column;
   width: 100%;
-  .tb {
-    width: 100%;
+  .el {
+    width: 75%;
     border: 1px solid rgb(160, 157, 157);
-    .tb-column {
-      width: 50px;
+    .el-table {
+      width: 100%;
     }
   }
   .select {
