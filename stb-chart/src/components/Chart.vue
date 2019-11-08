@@ -1,9 +1,15 @@
 <template>
   <div class>
-    <el-button class="void" @click="sendParaent">收起</el-button>
-    <button @click="getMsg">get</button>
-    <button @click="show">show</button>
-    <div id="myChart" :style="{width: '800px', height: '500px'}"></div>
+    <el-button
+      class="void"
+      @click="sendParaent"
+    >收起</el-button>
+    <!-- <button @click="getMsg">get</button>
+    <button @click="show">show</button> -->
+    <div
+      id="myChart"
+      :style="{width: '1200px', height: '500px'}"
+    ></div>
   </div>
 </template>
 
@@ -33,7 +39,14 @@ export default {
     };
   },
   mounted: function() {
+    this.getMsg();
     this.drawLine();
+  },
+  watch: {
+    msg: function() {
+      this.getMsg();
+      this.drawLine();
+    }
   },
   methods: {
     sendParaent: function() {
@@ -49,7 +62,8 @@ export default {
     },
     //请求取值，获取表内所有数据，init获取
     getMsg: function() {
-      console.log("this dis is:", this.msg);
+      this.option.xAxis.data = [];
+      this.option.series[0].data = [];
       let that = this;
       //   get请求;
       that
@@ -68,11 +82,9 @@ export default {
           }
         })
         .then(function(res) {
-          console.log("that.option.xAxis.type:", that.option.xAxis.type);
           res.data.data.forEach(element => {
-            console.log("that.option.xAxis.data:", that.option.xAxis.data);
-            that.option.xAxis.data.push(element.getdata);
-            that.option.series[0].data.push(element.datetime);
+            that.option.xAxis.data.push(element.datetime);
+            that.option.series[0].data.push(element.getdata);
             that.drawLine();
           });
         })
@@ -84,4 +96,7 @@ export default {
 };
 </script>
 <style lang="scss">
+.void {
+  margin-top: 40px;
+}
 </style>
