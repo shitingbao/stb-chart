@@ -10,19 +10,26 @@
       <button @click="getMsg()">getclicktest</button>
       <!-- 外部js方法测试 -->
       <button @click="contentMes()">content</button>
-      <button @click="wsSendData()">wsSendData</button>
+      <!-- <button @click="wsSendData()">wsSendData</button> -->
       <el-button>Default</el-button>
     </div>
     <router-view />
   </div>
 </template>
 <script>
-// import axios from "axois";
 export default {
+  mounted() {
+    console.log("this is mounted");
+  },
+
+  created: function() {
+    console.log("this is start create");
+  },
   methods: {
     // wsSendData() {
     //   this.$wsSend("my name is shitingbao");
     // },
+
     show: function(msg) {
       console.log(this.showMsg + msg);
     },

@@ -1,7 +1,8 @@
 <template>
   <div class>
     <el-button class="void" @click="sendParaent">收起</el-button>
-    <button @click="getMsg">show</button>
+    <button @click="getMsg">get</button>
+    <button @click="show">show</button>
     <div id="myChart" :style="{width: '800px', height: '500px'}"></div>
   </div>
 </template>
@@ -31,7 +32,7 @@ export default {
       }
     };
   },
-  mounted() {
+  mounted: function() {
     this.drawLine();
   },
   methods: {
@@ -41,9 +42,10 @@ export default {
     drawLine: function() {
       // 基于准备好的dom，初始化echarts实例
       let myChart = this.$echarts.init(document.getElementById("myChart"));
-
       myChart.setOption(this.option);
-      //   console.log("data:", this.option);
+    },
+    show: function() {
+      console.log("option:", this.option);
     },
     //请求取值，获取表内所有数据，init获取
     getMsg: function() {
@@ -66,13 +68,12 @@ export default {
           }
         })
         .then(function(res) {
-          //   console.log("this res is:", res.data);
-          //   console.log("this res is:", res.datetime);
-          //   console.log("this res is:", res.getdata);
-
-          res.data.array.foreach(element => {
-            this.option.xAxis.data.push(element.getdata);
-            this.option.series.data.push(element.datetime);
+          console.log("that.option.xAxis.type:", that.option.xAxis.type);
+          res.data.data.forEach(element => {
+            console.log("that.option.xAxis.data:", that.option.xAxis.data);
+            that.option.xAxis.data.push(element.getdata);
+            that.option.series[0].data.push(element.datetime);
+            that.drawLine();
           });
         })
         .catch(function(err) {
