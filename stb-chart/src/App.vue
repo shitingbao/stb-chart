@@ -4,14 +4,15 @@
       <router-link to="/">Home</router-link>|
       <router-link to="/about">About</router-link>|
       <router-link to="/chart">chart</router-link>|
-      <router-link to="/table">table</router-link>
+      <router-link to="/table">table</router-link>|
+      <router-link to="/imageupload">imagesUpLoad</router-link>
       <br />
       <!-- get请求测试 -->
-      <button @click="getMsg()">getclicktest</button>
+      <!-- <button @click="getMsg()">getclicktest</button> -->
       <!-- 外部js方法测试 -->
-      <button @click="contentMes()">content</button>
+      <!-- <button @click="contentMes()">content</button> -->
       <!-- <button @click="wsSendData()">wsSendData</button> -->
-      <el-button>Default</el-button>
+      <!-- <el-button>Default</el-button> -->
     </div>
     <router-view />
   </div>

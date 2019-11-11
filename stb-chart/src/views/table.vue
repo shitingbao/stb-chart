@@ -38,30 +38,86 @@
         v-model="inputData"
       ></el-input>
 
-      <el-button class="void" @click="find">查询</el-button>
-      <el-button class="void" @click="cancle">取消</el-button>
-      <el-button class="void" @click="show">show</el-button>
+      <el-button
+        class="void"
+        @click="find"
+      >查询</el-button>
+      <el-button
+        class="void"
+        @click="cancle"
+      >取消</el-button>
+      <el-button
+        class="void"
+        @click="show"
+      >show</el-button>
     </div>
 
     <div class="el">
-      <el-table :data="showTableData" stripe height="650" class="el-table">
-        <el-table-column prop="dis" label="dis" width="150"></el-table-column>
-        <el-table-column prop="alias" label="alias"></el-table-column>
-        <el-table-column prop="company" label="company"></el-table-column>
-        <el-table-column prop="department" label="department"></el-table-column>
-        <el-table-column prop="crd_no" label="crd_no"></el-table-column>
-        <el-table-column prop="truck_no" label="truck_no"></el-table-column>
-        <el-table-column prop="truck_type" label="truck_type"></el-table-column>
-        <el-table-column prop="last_conn" label="last_conn" width="180"></el-table-column>
-        <el-table-column prop="online" label="online" width="70"></el-table-column>
-        <el-table-column fixed="right" label="操作" width="100">
+      <el-table
+        :data="showTableData"
+        stripe
+        height="650"
+        class="el-table"
+      >
+        <el-table-column
+          prop="dis"
+          label="dis"
+          width="150"
+        ></el-table-column>
+        <el-table-column
+          prop="alias"
+          label="alias"
+        ></el-table-column>
+        <el-table-column
+          prop="company"
+          label="company"
+        ></el-table-column>
+        <el-table-column
+          prop="department"
+          label="department"
+        ></el-table-column>
+        <el-table-column
+          prop="crd_no"
+          label="crd_no"
+        ></el-table-column>
+        <el-table-column
+          prop="truck_no"
+          label="truck_no"
+        ></el-table-column>
+        <el-table-column
+          prop="truck_type"
+          label="truck_type"
+        ></el-table-column>
+        <el-table-column
+          prop="last_conn"
+          label="last_conn"
+          width="180"
+        ></el-table-column>
+        <el-table-column
+          prop="online"
+          label="online"
+          width="70"
+        ></el-table-column>
+        <el-table-column
+          fixed="right"
+          label="操作"
+          width="100"
+        >
           <template slot-scope="scope">
-            <el-button @click="handleClick(scope.row)" type="text" size="small">查看</el-button>
+            <el-button
+              @click="handleClick(scope.row)"
+              type="text"
+              size="small"
+            >查看</el-button>
           </template>
         </el-table-column>
       </el-table>
     </div>
-    <Chart v-if="isHideChild" v-bind:msg="sendChildData" @getChildData="showChild" />
+    <Chart
+      v-if="isHideChild"
+      v-bind:msg="sendChildData"
+      @getChildData="showChild"
+    />
   </div>
 </template>
 <script  lang='ts'>
@@ -171,7 +227,7 @@ export default {
           method: "GET",
           url: `https://api.imowfms.com/web/dis/list`,
           headers: {
-            token: "5dbfc265f6f1f8bce57b37b398f632dd"
+            token: "86736d70763adb7a723811de271b24b0"
           }
         })
         .then(function(e) {

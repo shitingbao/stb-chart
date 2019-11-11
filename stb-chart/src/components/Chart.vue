@@ -78,7 +78,7 @@ export default {
           },
           url: `https://api.imowfms.com/web/dis/chart/data`,
           headers: {
-            token: "5dbfc265f6f1f8bce57b37b398f632dd"
+            token: "86736d70763adb7a723811de271b24b0"
           }
         })
         .then(function(res) {
