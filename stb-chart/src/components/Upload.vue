@@ -8,6 +8,7 @@
       :on-remove="handleRemove"
       :file-list="fileList"
       :auto-upload="false"
+      :on-success="handsuccess"
     >
       <el-button
         slot="trigger"
@@ -51,6 +52,16 @@ export default {
     show: function() {
       console.log("ref:", this.$refs);
       console.log("filelist:", this.fileList);
+    },
+    handsuccess: function(response, file, fileList) {
+      console.log(response);
+      console.log(file);
+      console.log(fileList);
+    },
+    handerror: function(err, file, fileList) {
+      console.log(err);
+      console.log(file);
+      console.log(fileList);
     },
     submitUpload() {
       this.$refs.upload.submit();
