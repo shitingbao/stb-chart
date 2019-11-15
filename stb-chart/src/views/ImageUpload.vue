@@ -11,10 +11,12 @@ export default Vue.extend({
   name: "imageload",
   components: {
     Upload
+  },
+  methods: {
+    getName: function(name) {
+      name += "hello";
+      return name;
+    }
   }
 });
 </script>
-
-<style lang="sass">
-
-</style>
