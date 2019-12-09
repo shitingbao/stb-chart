@@ -38,56 +38,20 @@
         v-model="inputData"
       ></el-input>
 
-      <el-button
-        class="void"
-        @click="find"
-      >查询</el-button>
-      <el-button
-        class="void"
-        @click="cancle"
-      >取消</el-button>
-      <el-button
-        class="void"
-        @click="show"
-      >show</el-button>
+      <el-button class="void" @click="find">查询</el-button>
+      <el-button class="void" @click="cancle">取消</el-button>
+      <el-button class="void" @click="show">show</el-button>
     </div>
 
     <div class="el">
-      <el-table
-        :data="showTableData"
-        stripe
-        height="650"
-        class="el-table"
-      >
-        <el-table-column
-          prop="dis"
-          label="dis"
-          width="150"
-        ></el-table-column>
-        <el-table-column
-          prop="alias"
-          label="alias"
-        ></el-table-column>
-        <el-table-column
-          prop="company"
-          label="company"
-        ></el-table-column>
-        <el-table-column
-          prop="department"
-          label="department"
-        ></el-table-column>
-        <el-table-column
-          prop="crd_no"
-          label="crd_no"
-        ></el-table-column>
-        <el-table-column
-          prop="truck_no"
-          label="truck_no"
-        ></el-table-column>
-        <el-table-column
-          prop="truck_type"
-          label="truck_type"
-        ></el-table-column>
+      <el-table :data="showTableData" stripe height="650" class="el-table">
+        <el-table-column prop="dis" label="dis" width="150"></el-table-column>
+        <el-table-column prop="alias" label="alias"></el-table-column>
+        <el-table-column prop="company" label="company"></el-table-column>
+        <el-table-column prop="department" label="department"></el-table-column>
+        <el-table-column prop="crd_no" label="crd_no"></el-table-column>
+        <el-table-column prop="truck_no" label="truck_no"></el-table-column>
+        <el-table-column prop="truck_type" label="truck_type"></el-table-column>
         <el-table-column
           prop="last_conn"
           label="last_conn"
@@ -98,17 +62,11 @@
           label="online"
           width="70"
         ></el-table-column>
-        <el-table-column
-          fixed="right"
-          label="操作"
-          width="100"
-        >
+        <el-table-column fixed="right" label="操作" width="100">
           <template slot-scope="scope">
-            <el-button
-              @click="handleClick(scope.row)"
-              type="text"
-              size="small"
-            >查看</el-button>
+            <el-button @click="handleClick(scope.row)" type="text" size="small"
+              >查看</el-button
+            >
           </template>
         </el-table-column>
       </el-table>
@@ -120,7 +78,7 @@
     />
   </div>
 </template>
-<script  lang='ts'>
+<script lang="ts">
 import Chart from "../components/Chart.vue";
 
 export default {
