@@ -2,41 +2,15 @@
   <div class="bg">
     <!-- <button @click="getMsg()">getclicktest</button> -->
     <div class="select">
-      <el-select
-        class="void"
-        v-model="columnvalue"
-        clearable
-        placeholder="选择筛选列"
-        @change="selectData"
-      >
-        <el-option
-          v-for="item in columnoptions"
-          :key="item.value"
-          :label="item.label"
-          :value="item.value"
-        ></el-option>
+      <el-select class="void" v-model="columnvalue" clearable placeholder="选择筛选列" @change="selectData">
+        <el-option v-for="item in columnoptions" :key="item.value" :label="item.label" :value="item.value"></el-option>
       </el-select>
 
-      <el-select
-        class="void"
-        v-model="conditionvalue"
-        clearable
-        placeholder="选择条件列"
-        @change="selectData"
-      >
-        <el-option
-          v-for="item in conditionoptions"
-          :key="item.value"
-          :label="item.label"
-          :value="item.value"
-        ></el-option>
+      <el-select class="void" v-model="conditionvalue" clearable placeholder="选择条件列" @change="selectData">
+        <el-option v-for="item in conditionoptions" :key="item.value" :label="item.label" :value="item.value"></el-option>
       </el-select>
 
-      <el-input
-        class="select-input void"
-        placeholder="Please input your condition value"
-        v-model="inputData"
-      ></el-input>
+      <el-input class="select-input void" placeholder="Please input your condition value" v-model="inputData"></el-input>
 
       <el-button class="void" @click="find">查询</el-button>
       <el-button class="void" @click="cancle">取消</el-button>
@@ -52,30 +26,16 @@
         <el-table-column prop="crd_no" label="crd_no"></el-table-column>
         <el-table-column prop="truck_no" label="truck_no"></el-table-column>
         <el-table-column prop="truck_type" label="truck_type"></el-table-column>
-        <el-table-column
-          prop="last_conn"
-          label="last_conn"
-          width="180"
-        ></el-table-column>
-        <el-table-column
-          prop="online"
-          label="online"
-          width="70"
-        ></el-table-column>
+        <el-table-column prop="last_conn" label="last_conn" width="180"></el-table-column>
+        <el-table-column prop="online" label="online" width="70"></el-table-column>
         <el-table-column fixed="right" label="操作" width="100">
           <template slot-scope="scope">
-            <el-button @click="handleClick(scope.row)" type="text" size="small"
-              >查看</el-button
-            >
+            <el-button @click="handleClick(scope.row)" type="text" size="small">查看</el-button>
           </template>
         </el-table-column>
       </el-table>
     </div>
-    <Chart
-      v-if="isHideChild"
-      v-bind:msg="sendChildData"
-      @getChildData="showChild"
-    />
+    <Chart v-if="isHideChild" v-bind:msg="sendChildData" @getChildData="showChild" />
   </div>
 </template>
 <script lang="ts">
