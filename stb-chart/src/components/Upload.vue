@@ -3,7 +3,7 @@
     <el-upload
       class="upload-demo"
       ref="upload"
-      action="http://localhost:8088/formfile"
+      action="http://localhost:8088/images"
       :on-preview="handlePreview"
       :on-remove="handleRemove"
       :file-list="fileList"
@@ -14,7 +14,6 @@
       <el-button style="margin-left: 10px;" size="small" type="success" @click="submitUpload">上传到服务器</el-button>
       <div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过500kb</div>
     </el-upload>
-    <button @click="show">show</button>
   </div>
 </template>
 
@@ -26,17 +25,13 @@ export default {
     };
   },
   methods: {
-    show: function() {
-      console.log("ref:", this.$refs);
-      console.log("filelist:", this.fileList);
-    },
     handsuccess: function(response, file, fileList) {
-      console.log(response);
+      console.log("success:", response.data);
       console.log(file);
       console.log(fileList);
     },
     handerror: function(err, file, fileList) {
-      console.log(err);
+      console.log("handerror:", err);
       console.log(file);
       console.log(fileList);
     },
@@ -44,10 +39,10 @@ export default {
       this.$refs.upload.submit();
     },
     handleRemove(file, fileList) {
-      console.log(file, fileList);
+      console.log("remove:", file, fileList);
     },
     handlePreview(file) {
-      console.log(file);
+      console.log("preview:", file);
     }
   }
 };
