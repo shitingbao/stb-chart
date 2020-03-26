@@ -9,6 +9,8 @@ import echarts from 'echarts';
 import ElementUI from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css';
 
+axios.defaults.baseURL = "http://localhost:3001";
+axios.headers = { "Content-Type": "application/x-www-form-urlencoded" };
 Vue.use(ElementUI);
 Vue.prototype.$echarts = echarts;
 Vue.prototype.$conMsg = con;
