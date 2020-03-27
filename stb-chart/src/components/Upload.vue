@@ -6,6 +6,7 @@
       action="http://localhost:3001"
       :headers="myHeader()"
       :before-upload="handlePreview"
+      :on-change="change"
       :on-remove="handleRemove"
       :file-list="fileList"
       :auto-upload="false"
@@ -20,11 +21,12 @@
 </template>
 
 <script lang="ts">
-import Qs from "qs";
+// import Qs from "qs";
 export default {
   data() {
     return {
-      fileList: []
+      fileList: [],
+      formFileList: []
     };
   },
   methods: {
@@ -49,41 +51,33 @@ export default {
       console.log(fileList);
     },
     submitUpload() {
-      this.$refs.upload.submit();
+      console.log("formfile", this.formFileList);
+      let param = new FormData(); // 创建form对象
+
+      for (let i = 0; i < this.formFileList.length; i++) {
+        param.append(i + "", this.formFileList[i].raw); // 通过append向form对象添加数据
+      }
+      /* eslint-disable no-undef */
+
+      param.append("chunk", "0"); // 添加form表单中其他数据
+      console.log(param.get("file")); // FormData私有类对象，访问不到，可以通过get判断值是否传进去
+      let config = {
+        headers: { "Content-Type": "multipart/form-data" }
+      };
+      // 添加请求头
+      this.$http.post("/image", param, config).then(response => {
+        console.log(response.data);
+      });
     },
     handleRemove(file, fileList) {
       console.log("remove:", file, fileList);
+      this.formFileList = fileList;
+    },
+    change(file) {
+      this.formFileList.push(file);
     },
     handlePreview(file) {
       console.log("preview:", file);
-      this.$http({
-        method: "post",
-        url: "/image", // 路径
-        data: {
-          name: file
-          // pwd: 123456
-        },
-        transformRequest: [
-          function(data) {
-            let ret = "";
-            ret = Qs.stringify(data); // 注释方法是不使用插件
-            // for (let it in data) {
-            //   // ret += encodeURIComponent(it) + '=' + encodeURIComponent(data[it]) + '&';
-            //   ret += it + '=' + data[it] + '&';
-            // }
-            return ret;
-          }
-        ]
-        // headers: {
-        //   "Content-Type": "application/x-www-form-urlencoded"
-        // }
-      })
-        .then(res => {
-          console.log(res);
-        })
-        .catch(err => {
-          console.log(err);
-        });
     }
   }
 };
