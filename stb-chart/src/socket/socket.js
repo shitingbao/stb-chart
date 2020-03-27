@@ -1,25 +1,25 @@
 var websock = null;
 
-var host = 'localhost:8088/sockets/stb';
+var host = 'localhost:3002/sockets/stb';
 
 function initWebSocket() {
 	var wsuri = 'ws://' + host;
 	websock = new WebSocket(wsuri);
 
-	websock.onmessage = function(e) {
+	websock.onmessage = function (e) {
 		console.log('接收的数据为：', e.data);
 	};
 
-	websock.onclose = function(e) {
+	websock.onclose = function (e) {
 		websocketclose(e);
 	};
 
-	websock.onopen = function() {
+	websock.onopen = function () {
 		websocketOpen();
 	};
 
 	//连接发生错误的回调方法
-	websock.onerror = function() {
+	websock.onerror = function () {
 		console.log('WebSocket连接发生错误');
 	};
 }
@@ -31,12 +31,12 @@ function sendSock(agentData) {
 		websocketsend(agentData);
 	} else if (websock.readyState === websock.CONNECTING) {
 		// 若是 正在开启状态，则等待1s后重新调用
-		setTimeout(function() {
+		setTimeout(function () {
 			sendSock(agentData);
 		}, 1000);
 	} else {
 		// 若未开启 ，则等待1s后重新调用
-		setTimeout(function() {
+		setTimeout(function () {
 			sendSock(agentData);
 		}, 1000);
 	}
