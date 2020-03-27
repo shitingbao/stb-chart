@@ -13,7 +13,6 @@
       <el-button style="margin-left: 10px;" size="small" type="success" @click="submitUpload">上传到服务器</el-button>
       <div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过500kb</div>
     </el-upload>
-    <button @click="show()">show</button>
     <div>
       显示文字
       <ul>
@@ -34,11 +33,6 @@ export default {
     };
   },
   methods: {
-    show: function() {
-      console.log("upload:", this.$refs.upload);
-      // this.$refs.upload;uploadFiles
-      console.log("upload:", this.$refs.upload.uploadfiles);
-    },
     submitUpload() {
       let param = new FormData(); // 创建form对象
       for (let i = 0; i < this.formFileList.length; i++) {
