@@ -1,13 +1,18 @@
 var websock = null;
 
-var host = 'localhost:3002/sockets/stb';
+var host = 'localhost:3002/sockets/chat';
+var userWord = [];
 
+function requireUserWord() {
+	return userWord
+}
 function initWebSocket() {
 	var wsuri = 'ws://' + host;
 	websock = new WebSocket(wsuri);
 
 	websock.onmessage = function (e) {
 		console.log('接收的数据为：', e.data);
+		userWord.push(e.data)
 	};
 
 	websock.onclose = function (e) {
@@ -58,4 +63,4 @@ function websocketOpen() {
 
 initWebSocket();
 
-export { sendSock };
+export { sendSock, requireUserWord };
