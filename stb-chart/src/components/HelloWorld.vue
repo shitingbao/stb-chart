@@ -8,18 +8,12 @@
       start-placeholder="开始日期"
       end-placeholder="结束日期"
     ></el-date-picker>
-    <button @click="show()">默认</button>
   </div>
 </template>
 
 <script>
 export default {
   methods: {
-    show() {
-      console.log("date:", this.value1);
-      this.value1.push(this.getDay(-7));
-      this.value1.push(new Date());
-    },
     // 获取当前时间，day为number，getDay(-1):昨天的日期;getDay(0):今天的日期;getDay(1):明天的日期;【以此类推】
     getDay(day) {
       var today = new Date();
