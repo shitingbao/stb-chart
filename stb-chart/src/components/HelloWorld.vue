@@ -1,6 +1,7 @@
 <template>
   <div class="HelloWorld">
     <h1>{{ msg }}</h1>
+
     <el-date-picker
       @change="setchangetime"
       v-model="value1"
@@ -9,12 +10,6 @@
       start-placeholder="开始日期"
       end-placeholder="结束日期"
     ></el-date-picker>
-    <button @click="show()">默认</button>
-    <button @click="setname()">name1</button>
-    <button @click="setnametwo()">name2</button>
-    <ul>
-      <li v-for="(item,index) in wordData" :key="index">{{item }}</li>
-    </ul>
   </div>
 </template>
 
@@ -22,27 +17,10 @@
 export default {
   methods: {
     setchangetime() {
-      for (let i = 0; i < this.value1.length; i++) {
-        console.log("time:", this.changeDate(this.value1[i]));
-      }
+      this.start = this.changeDate(this.value1[0]);
+      this.stop = this.changeDate(this.value1[1]);
     },
-    setname() {
-      this.user = "1";
-    },
-    setnametwo() {
-      this.user = "2";
-    },
-    show() {
-      // console.log("date:", this.changeDate(this.value1[0]));
-      // console.log("date:", this.changeDate(this.value1[1]));
-      let ts = {
-        User: this.user,
-        Data: "123",
-        DateTime: new Date()
-      };
 
-      this.$wsSend(ts);
-    },
     // 获取当前时间，day为number，getDay(-1):昨天的日期;getDay(0):今天的日期;getDay(1):明天的日期;【以此类推】
     changeDate(da) {
       var tYear = da.getFullYear();
@@ -83,8 +61,8 @@ export default {
   data() {
     return {
       value1: [],
-      user: "",
-      wordData: this.$getUserWord()
+      start: "",
+      stop: ""
     };
   },
   name: "HelloWorld",

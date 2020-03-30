@@ -5,7 +5,8 @@
       <router-link to="/about">About</router-link>|
       <router-link to="/chart">chart</router-link>|
       <router-link to="/table">table</router-link>|
-      <router-link to="/imageupload">imagesUpLoad</router-link>
+      <router-link to="/imageupload">imagesUpLoad</router-link>|
+      <router-link to="/ChatRoom">imagesUpLoad</router-link>
       <br />
       <!-- get请求测试 -->
       <!-- <button @click="getMsg()">getclicktest</button> -->
