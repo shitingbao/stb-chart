@@ -1,5 +1,6 @@
 <template>
   <div>
+    <button @click="connect()">连接</button>
     <el-input v-model="input" placeholder="请输入你的姓名"></el-input>
     <el-input v-model="word" placeholder="内容"></el-input>
     <button @click="send()">发送</button>
@@ -10,8 +11,16 @@
 </template>
 
 <script>
+import { initWebSocket, sendSock, requireUserWord } from "../socket/socket.js";
 export default {
   methods: {
+    connect() {
+      if (this.input == "") {
+        alert("青输入您的姓名");
+        return;
+      }
+      initWebSocket(this.input);
+    },
     send() {
       if (this.input == "") {
         alert("青输入您的姓名");
@@ -27,14 +36,14 @@ export default {
         DateTime: new Date()
       };
 
-      this.$wsSend(ts);
+      sendSock(ts);
     }
   },
   mounted() {},
   data() {
     return {
       input: "",
-      wordData: this.$getUserWord(),
+      wordData: requireUserWord(),
       word: ""
     };
   },

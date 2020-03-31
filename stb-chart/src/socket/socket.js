@@ -6,9 +6,9 @@ var userWord = [];
 function requireUserWord() {
 	return userWord
 }
-function initWebSocket() {
+function initWebSocket(user) {
 	var wsuri = 'ws://' + host;
-	websock = new WebSocket(wsuri, "123");
+	websock = new WebSocket(wsuri, user);
 
 	websock.onmessage = function (e) {
 		console.log('接收的数据为：', e.data);
@@ -61,6 +61,6 @@ function websocketOpen() {
 	console.log('连接成功');
 }
 
-initWebSocket();
+// initWebSocket();
 
-export { sendSock, requireUserWord };
+export { initWebSocket, sendSock, requireUserWord };

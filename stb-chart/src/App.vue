@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <div id="nav">
+    <!-- <div id="nav">
       <router-link to="/">Home</router-link>|
       <router-link to="/about">About</router-link>|
       <router-link to="/chart">chart</router-link>|
@@ -8,18 +8,17 @@
       <router-link to="/imageupload">imagesUpLoad</router-link>|
       <router-link to="/chatroom">imagesUpLoad</router-link>
       <br />
-      <!-- get请求测试 -->
-      <!-- <button @click="getMsg()">getclicktest</button> -->
-      <!-- 外部js方法测试 -->
-      <!-- <button @click="contentMes()">content</button> -->
-      <!-- <button @click="wsSendData()">wsSendData</button> -->
-      <!-- <el-button>Default</el-button> -->
     </div>
-    <router-view />
+    <router-view />-->
+    <Login></Login>
   </div>
 </template>
 <script>
+import Login from "./views/Login";
 export default {
+  components: {
+    Login
+  },
   mounted() {
     console.log("this is mounted");
   },
@@ -28,10 +27,6 @@ export default {
     console.log("this is start create");
   },
   methods: {
-    // wsSendData() {
-    //   this.$wsSend("my name is shitingbao");
-    // },
-
     show: function(msg) {
       console.log(this.showMsg + msg);
     },
