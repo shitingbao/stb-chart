@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <!-- <div id="nav">
+    <div id="nav">
       <router-link to="/">Home</router-link>|
       <router-link to="/about">About</router-link>|
       <router-link to="/chart">chart</router-link>|
@@ -9,15 +9,15 @@
       <router-link to="/chatroom">imagesUpLoad</router-link>
       <br />
     </div>
-    <router-view />-->
-    <Login></Login>
+    <router-view />
+    <!-- <Login></Login> -->
   </div>
 </template>
 <script>
-import Login from "./views/Login";
+// import Login from "./views/Login";
 export default {
   components: {
-    Login
+    // Login
   },
   mounted() {
     console.log("this is mounted");
