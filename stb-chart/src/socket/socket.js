@@ -8,7 +8,7 @@ function requireUserWord() {
 }
 function initWebSocket() {
 	var wsuri = 'ws://' + host;
-	websock = new WebSocket(wsuri);
+	websock = new WebSocket(wsuri, "123");
 
 	websock.onmessage = function (e) {
 		console.log('接收的数据为：', e.data);
