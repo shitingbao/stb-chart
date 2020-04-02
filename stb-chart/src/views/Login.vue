@@ -7,7 +7,7 @@
 </template>
 
 <script>
-// import { initWebSocket, sendSock, requireUserWord } from "../socket/socket.js";
+import { initWebSocket } from "../socket/socket.js";
 export default {
   methods: {
     login() {
@@ -20,6 +20,18 @@ export default {
       };
       // 添加请求头
       this.$http.post("/login", param, config).then(response => {
+        if (!response.data.success) {
+          console.log("err:", response.data);
+          return;
+        }
+        initWebSocket(response.data.token);
+        localStorage.setItem("username", this.username);
+        // this.$router.push({
+        //   name: "home",
+        //   params: {}
+        // });
+        // window.location.replace("/home");
+        this.$router.push({ path: "/home" });
         console.log(response.data);
       });
     }

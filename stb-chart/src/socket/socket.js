@@ -2,6 +2,7 @@ var websock = null;
 
 var host = 'localhost:3002/sockets/chat';
 var userWord = [];
+var username = "";
 
 function requireUserWord() {
 	return userWord
@@ -63,4 +64,4 @@ function websocketOpen() {
 
 // initWebSocket();
 
-export { initWebSocket, sendSock, requireUserWord };
+export { username, initWebSocket, sendSock, requireUserWord };
