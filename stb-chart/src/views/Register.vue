@@ -2,37 +2,28 @@
   <div v-if="isLogin">
     <el-input placeholder="请输入内容" v-model="username" clearable></el-input>
     <el-input placeholder="请输入密码" v-model="pwd" show-password></el-input>
-    <el-button type="primary" @click="login">登录</el-button>
     <el-button type="primary" @click="register">注册</el-button>
   </div>
 </template>
 
 <script>
-import { initWebSocket } from "../socket/socket.js";
 export default {
   methods: {
     register() {
-      this.$router.push({ path: "/register" });
-    },
-    login() {
       let config = {
-        headers: { "stbweb-api": "login" }
+        headers: { "stbweb-api": "register" }
       };
       let param = {
         Name: this.username,
-        Pwd: this.strToHexCharCode(this.pwd)
+        Password: this.strToHexCharCode(this.pwd)
       };
       // 添加请求头
-      this.$http.post("/login", param, config).then(response => {
+      this.$http.post("/register", param, config).then(response => {
         if (!response.data.success) {
           console.log("err:", response.data);
           return;
         }
-        this.isLogin = false;
-        initWebSocket(response.data.token);
-        localStorage.setItem("username", this.username);
-        this.$router.push({ path: "/home" });
-        console.log(response.data);
+        this.$router.push({ path: "/login" });
       });
     },
     strToHexCharCode(str) {
@@ -52,7 +43,7 @@ export default {
       isLogin: true
     };
   },
-  name: "Login",
+  name: "Register",
   props: {}
 };
 </script>
