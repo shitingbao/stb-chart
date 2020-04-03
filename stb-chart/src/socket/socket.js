@@ -1,6 +1,6 @@
 var websock = null;
 
-var host = 'localhost:3002/sockets/chat';
+var host = '47.244.236.195:3002/sockets/chat';
 var userWord = [];
 var username = "";
 
