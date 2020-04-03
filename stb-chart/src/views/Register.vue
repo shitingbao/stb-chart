@@ -1,6 +1,6 @@
 <template>
   <div v-if="isLogin">
-    <el-input placeholder="请输入内容" v-model="username" clearable></el-input>
+    <el-input placeholder="请输入用户名" v-model="username" clearable></el-input>
     <el-input placeholder="请输入密码" v-model="pwd" show-password></el-input>
     <el-button type="primary" @click="register">注册</el-button>
   </div>

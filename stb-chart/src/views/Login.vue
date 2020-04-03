@@ -1,9 +1,11 @@
 <template>
-  <div v-if="isLogin">
-    <el-input placeholder="请输入内容" v-model="username" clearable></el-input>
-    <el-input placeholder="请输入密码" v-model="pwd" show-password></el-input>
-    <el-button type="primary" @click="login">登录</el-button>
-    <el-button type="primary" @click="register">注册</el-button>
+  <div>
+    <div v-if="isLogin">
+      <el-input placeholder="请输入内容" v-model="username" clearable></el-input>
+      <el-input placeholder="请输入密码" v-model="pwd" show-password></el-input>
+      <el-button type="primary" @click="login">登录</el-button>
+    </div>
+    <el-button v-if="isLogin" type="primary" @click="register">注册</el-button>
   </div>
 </template>
 
@@ -12,6 +14,7 @@ import { initWebSocket } from "../socket/socket.js";
 export default {
   methods: {
     register() {
+      this.isLogin = false;
       this.$router.push({ path: "/register" });
     },
     login() {
