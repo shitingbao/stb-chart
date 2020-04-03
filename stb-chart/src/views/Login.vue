@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div v-if="isLogin">
     <el-input placeholder="请输入内容" v-model="username" clearable></el-input>
     <el-input placeholder="请输入密码" v-model="pwd" show-password></el-input>
     <el-button type="primary" @click="login">登录</el-button>
@@ -16,7 +16,7 @@ export default {
       };
       let param = {
         Name: this.username,
-        Pwd: this.pwd
+        Pwd: this.strToHexCharCode(this.pwd)
       };
       // 添加请求头
       this.$http.post("/login", param, config).then(response => {
@@ -24,6 +24,7 @@ export default {
           console.log("err:", response.data);
           return;
         }
+        this.isLogin = false;
         initWebSocket(response.data.token);
         localStorage.setItem("username", this.username);
         // this.$router.push({
@@ -34,13 +35,22 @@ export default {
         this.$router.push({ path: "/home" });
         console.log(response.data);
       });
+    },
+    strToHexCharCode(str) {
+      if (str === "") return "";
+      var hexCharCode = [];
+      for (var i = 0; i < str.length; i++) {
+        hexCharCode.push(str.charCodeAt(i).toString(16));
+      }
+      return hexCharCode.join("");
     }
   },
   mounted() {},
   data() {
     return {
       username: "",
-      pwd: ""
+      pwd: "",
+      isLogin: true
     };
   },
   name: "Login",
