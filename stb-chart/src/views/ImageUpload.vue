@@ -8,7 +8,7 @@
 import Vue from "vue";
 import Upload from "../components/Upload.vue";
 export default Vue.extend({
-  name: "imageload",
+  name: "ImageUpload",
   components: {
     Upload
   },

@@ -2,15 +2,41 @@
   <div class="bg">
     <!-- <button @click="getMsg()">getclicktest</button> -->
     <div class="select">
-      <el-select class="void" v-model="columnvalue" clearable placeholder="选择筛选列" @change="selectData">
-        <el-option v-for="item in columnoptions" :key="item.value" :label="item.label" :value="item.value"></el-option>
+      <el-select
+        class="void"
+        v-model="columnvalue"
+        clearable
+        placeholder="选择筛选列"
+        @change="selectData"
+      >
+        <el-option
+          v-for="item in columnoptions"
+          :key="item.value"
+          :label="item.label"
+          :value="item.value"
+        ></el-option>
       </el-select>
 
-      <el-select class="void" v-model="conditionvalue" clearable placeholder="选择条件列" @change="selectData">
-        <el-option v-for="item in conditionoptions" :key="item.value" :label="item.label" :value="item.value"></el-option>
+      <el-select
+        class="void"
+        v-model="conditionvalue"
+        clearable
+        placeholder="选择条件列"
+        @change="selectData"
+      >
+        <el-option
+          v-for="item in conditionoptions"
+          :key="item.value"
+          :label="item.label"
+          :value="item.value"
+        ></el-option>
       </el-select>
 
-      <el-input class="select-input void" placeholder="Please input your condition value" v-model="inputData"></el-input>
+      <el-input
+        class="select-input void"
+        placeholder="Please input your condition value"
+        v-model="inputData"
+      ></el-input>
 
       <el-button class="void" @click="find">查询</el-button>
       <el-button class="void" @click="cancle">取消</el-button>
@@ -42,7 +68,7 @@
 import Chart from "../components/Chart.vue";
 
 export default {
-  name: "bg",
+  name: "Table",
   components: {
     Chart
   },

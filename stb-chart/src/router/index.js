@@ -34,7 +34,7 @@ const routes = [
 	{
 		path: '/table',
 		name: 'table',
-		component: () => import('../views/table.vue')
+		component: () => import('../views/Table.vue')
 	},
 	{
 		path: '/imageupload',
