@@ -1,17 +1,17 @@
 <template>
   <div id="app">
-    <Home></Home>
-    <!-- <Login></Login>
-    <router-view />-->
+    <!-- <Home></Home> -->
+    <Login></Login>
+    <router-view />
   </div>
 </template>
 <script>
-// import Login from "./views/Login";
-import Home from "./views/Home";
+import Login from "./views/Login";
+// import Home from "./views/Home";
 export default {
   components: {
-    // Login,
-    Home
+    Login
+    // Home
   },
   mounted() {
     console.log("this is mounted");

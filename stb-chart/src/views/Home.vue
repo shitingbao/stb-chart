@@ -12,9 +12,11 @@
       <el-menu-item index="1">主页</el-menu-item>
       <el-submenu index="2">
         <template slot="title">功能选择项</template>
-        <el-menu-item index="2-1">选项1</el-menu-item>
-        <el-menu-item index="2-2">选项2</el-menu-item>
-        <el-menu-item index="2-3">选项3</el-menu-item>
+        <el-menu-item index="about">about</el-menu-item>
+        <el-menu-item index="chart">chart</el-menu-item>
+        <el-menu-item index="chatroom">chatroom</el-menu-item>
+        <el-menu-item index="imageupload">imageupload</el-menu-item>
+        <el-menu-item index="table">table</el-menu-item>
         <el-submenu index="2-4">
           <template slot="title">选项4</template>
           <el-menu-item index="2-4-1">选项1</el-menu-item>
@@ -27,21 +29,12 @@
         <span target="_blank">用户管理</span>
       </el-menu-item>
     </el-menu>
-    <!-- <div id="nav">
-      <router-link to="/about">About</router-link>|
-      <router-link to="/chart">chart</router-link>|
-      <router-link to="/table">table</router-link>|
-      <router-link to="/imageupload">imagesUpLoad</router-link>|
-      <router-link to="/chatroom">chatroom</router-link>
-      <br />
-    </div>
-    <router-view />-->
     <div>
-      <About></About>
-      <Chart></Chart>
-      <ChatRoom></ChatRoom>
-      <ImageUpload></ImageUpload>
-      <Table></Table>
+      <About v-if="selectPage=='about'"></About>
+      <Chart v-if="selectPage=='chart'"></Chart>
+      <ChatRoom v-if="selectPage=='chatroom'"></ChatRoom>
+      <ImageUpload v-if="selectPage=='imageupload'"></ImageUpload>
+      <Table v-if="selectPage=='table'"></Table>
     </div>
   </div>
 </template>
@@ -61,7 +54,8 @@ export default {
   },
   data() {
     return {
-      activeIndex: "1"
+      activeIndex: "1",
+      selectPage: ""
     };
   },
   mounted() {
@@ -76,7 +70,9 @@ export default {
       this.$conMsg("123");
     },
     handleSelect(key, keyPath) {
-      console.log(key, keyPath);
+      this.selectPage = key;
+      console.log("key:", key);
+      console.log("keyPath:", keyPath);
     }
   }
 };
