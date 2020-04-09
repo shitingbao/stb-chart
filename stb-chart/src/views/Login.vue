@@ -1,16 +1,16 @@
 <template>
-  <div>
-    <div v-if="isLogin">
+  <div class="login">
+    <div>
       <el-input placeholder="请输入内容" v-model="username" clearable></el-input>
       <el-input placeholder="请输入密码" v-model="pwd" show-password></el-input>
       <el-button type="primary" @click="login">登录</el-button>
     </div>
-    <el-button v-if="isLogin" type="primary" @click="register">注册</el-button>
+    <el-button type="primary" @click="register">注册</el-button>
   </div>
 </template>
 
 <script>
-import { initWebSocket } from "../socket/socket.js";
+// import { initWebSocket } from "../socket/socket.js";
 export default {
   methods: {
     register() {
@@ -31,10 +31,10 @@ export default {
           console.log("err:", response.data);
           return;
         }
-        this.isLogin = false;
-        initWebSocket(response.data.token);
+
         localStorage.setItem("username", this.username);
-        this.$router.push({ path: "/home" });
+        // this.$router.push({ path: "/home" });
+        this.$router.push({ name: "home" });
         console.log(response.data);
       });
     },
@@ -51,8 +51,7 @@ export default {
   data() {
     return {
       username: "",
-      pwd: "",
-      isLogin: true
+      pwd: ""
     };
   },
   name: "Login",
@@ -62,4 +61,12 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">
+.login {
+  display: flex;
+  padding: 0px;
+  margin: 0px;
+  width: 100%;
+  height: 100%;
+  background: yellow;
+}
 </style>

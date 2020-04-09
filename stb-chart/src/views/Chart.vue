@@ -13,7 +13,7 @@ require("echarts/lib/chart/bar");
 require("echarts/lib/component/tooltip");
 require("echarts/lib/component/title");
 export default {
-  name: "hello",
+  name: "Chart",
   data() {
     return {
       msg: "Welcome to Your Vue.js App"

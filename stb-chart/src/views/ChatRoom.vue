@@ -9,7 +9,7 @@
 </template>
 
 <script>
-import { sendSock, requireUserWord } from "../socket/socket.js";
+import { sendSock, requireUserWord, initWebSocket } from "../socket/socket.js";
 export default {
   methods: {
     send() {
@@ -26,7 +26,9 @@ export default {
       sendSock(ts);
     }
   },
-  mounted() {},
+  mounted() {
+    initWebSocket(localStorage.getItem("username"));
+  },
   data() {
     return {
       wordData: requireUserWord(),

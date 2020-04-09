@@ -13,55 +13,17 @@ export default {
     Login
     // Home
   },
-  mounted() {
-    console.log("this is mounted");
-  },
+  mounted() {},
 
-  created: function() {
-    console.log("this is start create");
-  },
-  methods: {
-    show: function(msg) {
-      console.log(this.showMsg + msg);
-    },
-    getMsg: function() {
-      console.log("start get");
-      let that = this;
-      //get请求
-      that.$http
-        .get("http://localhost:8088/")
-        .then(res => {
-          console.log("this data is:", res);
-        }) //执行成功后执行，res为反馈的数据
-        .catch(function(err) {
-          console.log("this error is:", err);
-        }); //失败后执行的逻辑
-    },
-    contentMes: function() {
-      this.$conMsg("123");
-    }
-  }
+  created: function() {},
+  methods: {}
 };
 </script>
 <style lang="scss">
 #app {
-  font-family: "Avenir", Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-}
-
-#nav {
-  padding: 30px;
-
-  a {
-    font-weight: bold;
-    color: #2c3e50;
-
-    &.router-link-exact-active {
-      color: #42b983;
-    }
-  }
+  width: 100%;
+  height: 100%;
+  padding: 0px;
+  margin: 0px;
 }
 </style>

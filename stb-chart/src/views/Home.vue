@@ -16,6 +16,7 @@
         <el-menu-item index="chart">待定</el-menu-item>
         <el-menu-item index="chatroom">聊天室</el-menu-item>
         <el-menu-item index="imageupload">图片文字转换</el-menu-item>
+        <el-menu-item index="tree">tree</el-menu-item>
         <el-menu-item index="table">待定</el-menu-item>
         <el-submenu index="2-4">
           <template slot="title">待定0</template>
@@ -35,6 +36,7 @@
       <ChatRoom v-if="selectPage=='chatroom'"></ChatRoom>
       <ImageUpload v-if="selectPage=='imageupload'"></ImageUpload>
       <Table v-if="selectPage=='table'"></Table>
+      <Tree v-if="selectPage=='tree'"></Tree>
     </div>
   </div>
 </template>
@@ -44,13 +46,15 @@ import Chart from "./Chart";
 import ChatRoom from "./ChatRoom";
 import ImageUpload from "./ImageUpload";
 import Table from "./Table";
+import Tree from "./library/Tree";
 export default {
   components: {
     About,
     Chart,
     ChatRoom,
     ImageUpload,
-    Table
+    Table,
+    Tree
   },
   data() {
     return {
