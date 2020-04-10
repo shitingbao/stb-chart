@@ -17,6 +17,7 @@ export default {
         alert("不能发送内容为空的信息");
         return;
       }
+
       let ts = {
         User: localStorage.getItem("username"),
         Data: this.word,
@@ -27,7 +28,7 @@ export default {
     }
   },
   mounted() {
-    initWebSocket(localStorage.getItem("username"));
+    initWebSocket(localStorage.getItem("token"));
   },
   data() {
     return {
