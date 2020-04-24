@@ -12,12 +12,13 @@
       <el-menu-item index="1">主页</el-menu-item>
       <el-submenu index="2">
         <template slot="title">功能选择项</template>
-        <el-menu-item index="about">待定</el-menu-item>
-        <el-menu-item index="chart">待定</el-menu-item>
+        <el-menu-item index="about">about</el-menu-item>
+        <el-menu-item index="chart">chart</el-menu-item>
         <el-menu-item index="chatroom">聊天室</el-menu-item>
         <el-menu-item index="imageupload">图片文字转换</el-menu-item>
         <el-menu-item index="tree">tree</el-menu-item>
-        <el-menu-item index="table">待定</el-menu-item>
+        <el-menu-item index="table">table</el-menu-item>
+        <el-menu-item index="hello">hello</el-menu-item>
         <el-submenu index="2-4">
           <template slot="title">待定0</template>
           <el-menu-item index="2-4-1">待定1</el-menu-item>
@@ -37,6 +38,7 @@
       <ImageUpload v-if="selectPage=='imageupload'"></ImageUpload>
       <Table v-if="selectPage=='table'"></Table>
       <Tree v-if="selectPage=='tree'"></Tree>
+      <HelloWorld v-if="selectPage=='hello'"></HelloWorld>
     </div>
   </div>
 </template>
@@ -47,6 +49,7 @@ import ChatRoom from "./ChatRoom";
 import ImageUpload from "./ImageUpload";
 import Table from "./Table";
 import Tree from "./library/Tree";
+import HelloWorld from "../components/HelloWorld";
 export default {
   components: {
     About,
@@ -54,7 +57,8 @@ export default {
     ChatRoom,
     ImageUpload,
     Table,
-    Tree
+    Tree,
+    HelloWorld
   },
   data() {
     return {
