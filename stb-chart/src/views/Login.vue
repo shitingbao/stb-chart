@@ -10,7 +10,6 @@
 </template>
 
 <script>
-// import { initWebSocket } from "../socket/socket.js";
 export default {
   methods: {
     register() {
@@ -34,7 +33,6 @@ export default {
 
         localStorage.setItem("username", this.username);
         localStorage.setItem("token", response.data.token);
-        // this.$router.push({ path: "/home" });
         this.$router.push({ name: "home" });
         console.log(response.data);
       });
