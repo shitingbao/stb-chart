@@ -9,7 +9,11 @@
 </template>
 
 <script>
-import { sendSock, requireUserWord, initWebSocket } from "../socket/socket.js";
+import {
+  sendSock,
+  requireUserWord,
+  initWebSocket
+} from "../../socket/socket.js";
 export default {
   methods: {
     send() {

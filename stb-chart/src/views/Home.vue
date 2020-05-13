@@ -43,13 +43,12 @@
   </div>
 </template>
 <script>
-import About from "./About";
-import Chart from "./Chart";
-import ChatRoom from "./ChatRoom";
-import ImageUpload from "./ImageUpload";
-import Table from "./Table";
+import About from "./library/About";
+import Chart from "./library/Chart";
+import ChatRoom from "./library/ChatRoom";
+import ImageUpload from "./library/ImageUpload";
+import Table from "./library/Table";
 import Tree from "./library/Tree";
-import HelloWorld from "../components/HelloWorld";
 export default {
   components: {
     About,
@@ -57,8 +56,7 @@ export default {
     ChatRoom,
     ImageUpload,
     Table,
-    Tree,
-    HelloWorld
+    Tree
   },
   data() {
     return {

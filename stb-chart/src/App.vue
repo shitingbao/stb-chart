@@ -1,18 +1,11 @@
 <template>
   <div id="app">
-    <!-- <Home></Home> -->
-    <Login></Login>
     <router-view />
   </div>
 </template>
 <script>
-import Login from "./views/Login";
-// import Home from "./views/Home";
 export default {
-  components: {
-    Login
-    // Home
-  },
+  components: {},
   mounted() {},
 
   created: function() {},

@@ -61,16 +61,16 @@
         </el-table-column>
       </el-table>
     </div>
-    <Chart v-if="isHideChild" v-bind:msg="sendChildData" @getChildData="showChild" />
+    <!-- <Chart v-if="isHideChild" v-bind:msg="sendChildData" @getChildData="showChild" /> -->
   </div>
 </template>
 <script lang="ts">
-import Chart from "../components/Chart.vue";
+// import Chart from "../../components/Chart.vue";
 
 export default {
   name: "Table",
   components: {
-    Chart
+    // Chart
   },
   data() {
     return {

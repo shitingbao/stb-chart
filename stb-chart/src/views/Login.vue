@@ -16,26 +16,29 @@ export default {
       this.isLogin = false;
       this.$router.push({ path: "/register" });
     },
-    login() {
-      let config = {
-        headers: { "stbweb-api": "login" }
-      };
-      let param = {
-        Name: this.username,
-        Pwd: this.strToHexCharCode(this.pwd)
-      };
-      // 添加请求头
-      this.$http.post("/login", param, config).then(response => {
-        if (!response.data.success) {
-          console.log("err:", response.data);
-          return;
-        }
+    // login() {
+    //   let config = {
+    //     headers: { "stbweb-api": "login" }
+    //   };
+    //   let param = {
+    //     Name: this.username,
+    //     Pwd: this.strToHexCharCode(this.pwd)
+    //   };
+    //   // 添加请求头
+    //   this.$http.post("/login", param, config).then(response => {
+    //     if (!response.data.success) {
+    //       console.log("err:", response.data);
+    //       return;
+    //     }
 
-        localStorage.setItem("username", this.username);
-        localStorage.setItem("token", response.data.token);
-        this.$router.push({ name: "home" });
-        console.log(response.data);
-      });
+    //     localStorage.setItem("username", this.username);
+    //     localStorage.setItem("token", response.data.token);
+    //     this.$router.push({ name: "home" });
+    //     console.log(response.data);
+    //   });
+    // },
+    login() {
+      this.$router.push({ name: "home" });
     },
     strToHexCharCode(str) {
       if (str === "") return "";
