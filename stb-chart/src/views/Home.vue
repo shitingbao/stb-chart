@@ -12,13 +12,10 @@
       <el-menu-item index="1">主页</el-menu-item>
       <el-submenu index="2">
         <template slot="title">功能选择项</template>
-        <el-menu-item index="about">about</el-menu-item>
-        <el-menu-item index="chart">chart</el-menu-item>
+        <el-menu-item index="excel">excel操作</el-menu-item>
+        <el-menu-item index="chart">echart例子</el-menu-item>
         <el-menu-item index="chatroom">聊天室</el-menu-item>
         <el-menu-item index="imageupload">图片文字转换</el-menu-item>
-        <el-menu-item index="tree">tree</el-menu-item>
-        <el-menu-item index="table">table</el-menu-item>
-        <el-menu-item index="hello">hello</el-menu-item>
         <el-submenu index="2-4">
           <template slot="title">待定0</template>
           <el-menu-item index="2-4-1">待定1</el-menu-item>
@@ -32,31 +29,24 @@
       </el-menu-item>
     </el-menu>
     <div>
-      <About v-if="selectPage=='about'"></About>
-      <Chart v-if="selectPage=='chart'"></Chart>
-      <ChatRoom v-if="selectPage=='chatroom'"></ChatRoom>
-      <ImageUpload v-if="selectPage=='imageupload'"></ImageUpload>
-      <Table v-if="selectPage=='table'"></Table>
-      <Tree v-if="selectPage=='tree'"></Tree>
-      <HelloWorld v-if="selectPage=='hello'"></HelloWorld>
+      <ExcelOpera v-if="selectPage==='excel'"></ExcelOpera>
+      <Chart v-if="selectPage==='chart'"></Chart>
+      <ChatRoom v-if="selectPage==='chatroom'"></ChatRoom>
+      <ImageUpload v-if="selectPage==='imageupload'"></ImageUpload>
     </div>
   </div>
 </template>
 <script>
-import About from "./library/About";
+import ExcelOpera from "./library/ExcelOpera";
 import Chart from "./library/Chart";
 import ChatRoom from "./library/ChatRoom";
 import ImageUpload from "./library/ImageUpload";
-import Table from "./library/Table";
-import Tree from "./library/Tree";
 export default {
   components: {
-    About,
+    ExcelOpera,
     Chart,
     ChatRoom,
-    ImageUpload,
-    Table,
-    Tree
+    ImageUpload
   },
   data() {
     return {
