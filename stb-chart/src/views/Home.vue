@@ -16,6 +16,8 @@
         <el-menu-item index="chart">echart例子</el-menu-item>
         <el-menu-item index="chatroom">聊天室</el-menu-item>
         <el-menu-item index="imageupload">图片文字转换</el-menu-item>
+        <el-menu-item index="comparison">文件内容比较</el-menu-item>
+        <el-menu-item index="test">test</el-menu-item>
         <el-submenu index="2-4">
           <template slot="title">待定0</template>
           <el-menu-item index="2-4-1">待定1</el-menu-item>
@@ -33,6 +35,8 @@
       <Chart v-if="selectPage==='chart'"></Chart>
       <ChatRoom v-if="selectPage==='chatroom'"></ChatRoom>
       <ImageUpload v-if="selectPage==='imageupload'"></ImageUpload>
+      <FileComparison v-if="selectPage==='comparison'"></FileComparison>
+      <Test v-if="selectPage==='test'"></Test>
     </div>
   </div>
 </template>
@@ -41,12 +45,16 @@ import ExcelOpera from "./library/ExcelOpera";
 import Chart from "./library/Chart";
 import ChatRoom from "./library/ChatRoom";
 import ImageUpload from "./library/ImageUpload";
+import FileComparison from "./library/FileComparison";
+import Test from "./library/Test";
 export default {
   components: {
     ExcelOpera,
     Chart,
     ChatRoom,
-    ImageUpload
+    ImageUpload,
+    FileComparison,
+    Test
   },
   data() {
     return {
