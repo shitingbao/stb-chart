@@ -62,20 +62,15 @@ export default {
       selectPage: ""
     };
   },
-  mounted() {
-    console.log("this is mounted");
-  },
+  mounted() {},
 
-  created: function() {
-    console.log("this is start create");
-  },
+  created: function() {},
   methods: {
     contentMes: function() {
       this.$conMsg("123");
     },
     handleSelect(key, keyPath) {
       this.selectPage = key;
-      console.log("key:", key);
       console.log("keyPath:", keyPath);
     }
   }

@@ -3,7 +3,7 @@
   <div>
     <el-button type="primary" @click="show" plain>比较</el-button>
     <div class="comparison">
-      <el-upload class="upload-demo" drag action="/" multiple>
+      <el-upload class="upload-demo" drag action multiple>
         <i class="el-icon-upload"></i>
         <div class="el-upload__text">
           将文件拖到此处，或
@@ -14,7 +14,7 @@
           <editor
             v-model="content"
             @init="editorInit"
-            lang="html"
+            lang="json"
             theme="chrome"
             width="500"
             height="100"
@@ -33,10 +33,11 @@
           <editor
             v-model="content"
             @init="editorInit"
-            lang="html"
+            :options="options"
+            lang="json"
             theme="chrome"
             width="500"
-            height="100"
+            height="500"
           ></editor>
         </div>
       </el-upload>
@@ -53,13 +54,27 @@ export default {
   data() {
     return {
       msg: "FileComparison",
-      content: ""
+      content: "",
+
+      options: {
+        //编辑框的一些配置
+        /*vue2-ace-editor编辑器配置自动补全等*/
+        enableBasicAutocompletion: true,
+        enableSnippets: true,
+        enableLiveAutocompletion: true /*自动补全*/,
+        readOnly: true
+      }
     };
   },
   mounted() {},
   methods: {
     show() {
-      console.log(this.content);
+      let data = {
+        "1": ["aa"],
+        "4": ["aa", "bb", "cc"],
+        "5": ["", "aa", "bb", "cc", "dd"]
+      };
+      this.content = JSON.stringify(data, null, "\t");
     },
     editorInit: function() {
       require("brace/ext/language_tools"); //language extension prerequsite...
@@ -68,6 +83,11 @@ export default {
       require("brace/mode/less");
       require("brace/theme/chrome");
       require("brace/snippets/javascript"); //snippet
+
+      require("brace");
+      require("brace/mode/json");
+      require("brace/snippets/json");
+      require("brace/snippets/html");
     }
   }
 };
