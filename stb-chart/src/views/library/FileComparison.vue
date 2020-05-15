@@ -1,9 +1,9 @@
 
 <template>
   <div>
-    <el-button type="primary" @click="show" plain>比较</el-button>
+    <el-button type="primary" @click="upload" plain>比较</el-button>
     <div class="comparison">
-      <el-upload class="upload-demo" drag action multiple>
+      <el-upload :on-change="leftChange" class="upload-demo" drag action multiple>
         <i class="el-icon-upload"></i>
         <div class="el-upload__text">
           将文件拖到此处，或
@@ -22,7 +22,7 @@
         </div>
       </el-upload>
 
-      <el-upload class="upload-demo" drag action multiple>
+      <el-upload :on-change="rightChange" class="upload-demo" drag action multiple>
         <i class="el-icon-upload"></i>
         <div class="el-upload__text">
           将文件拖到此处，或
@@ -55,7 +55,8 @@ export default {
     return {
       msg: "FileComparison",
       content: "",
-
+      leftFile: {},
+      rightFile: {},
       options: {
         //编辑框的一些配置
         /*vue2-ace-editor编辑器配置自动补全等*/
@@ -88,6 +89,34 @@ export default {
       require("brace/mode/json");
       require("brace/snippets/json");
       require("brace/snippets/html");
+    },
+    upload() {
+      let param = new FormData(); // 创建form对象
+
+      param.append("lft", ".csv"); // 添加form表单中其他数据
+      param.append("lsep", ","); // 添加form表单中其他数据
+      param.append("listitle", "false"); // 添加form表单中其他数据
+
+      param.append("rft", ".xlsx"); // 添加form表单中其他数据
+      param.append("rsep", ","); // 添加form表单中其他数据
+      param.append("ristitle", "false"); // 添加form表单中其他数据
+
+      param.append("left", this.leftFile.raw);
+      param.append("right", this.rightFile.raw);
+      let config = {
+        headers: { "Content-Type": "multipart/form-data" }
+      };
+      console.log("param:", param);
+      // 添加请求头
+      this.$http.post("/filecomparison", param, config).then(response => {
+        console.log(response.data);
+      });
+    },
+    leftChange(file) {
+      this.leftFile = file;
+    },
+    rightChange(file) {
+      this.rightFile = file;
     }
   }
 };
