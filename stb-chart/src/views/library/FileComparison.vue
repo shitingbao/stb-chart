@@ -93,11 +93,9 @@ export default {
     upload() {
       let param = new FormData(); // 创建form对象
 
-      param.append("lft", ".csv"); // 添加form表单中其他数据
       param.append("lsep", ","); // 添加form表单中其他数据
       param.append("listitle", "false"); // 添加form表单中其他数据
 
-      param.append("rft", ".xlsx"); // 添加form表单中其他数据
       param.append("rsep", ","); // 添加form表单中其他数据
       param.append("ristitle", "false"); // 添加form表单中其他数据
 
