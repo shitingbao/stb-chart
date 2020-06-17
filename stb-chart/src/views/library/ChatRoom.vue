@@ -19,7 +19,7 @@ export default {
   data() {
     return {
       word: "",
-      host: "localhost:3002/sockets/chat",
+      host: "124.70.156.31:3002/sockets/chat",
       userWord: [],
       username: "",
       websock: {},
@@ -56,17 +56,18 @@ export default {
     },
     //new WebSocket的第二个参数为特殊参数，后台另外处理
     initWebSocket(user) {
+      var that = this;
       var wsuri = "ws://" + this.host;
       this.websock = new WebSocket(wsuri, user);
       this.websock.onmessage = function(e) {
         console.log("接收的数据为：", e.data);
-        this.userWord.push(e.data);
+        that.userWord.push(e.data);
       };
       this.websock.onclose = function(e) {
-        this.websocketclose(e);
+        that.websocketclose(e);
       };
       this.websock.onopen = function() {
-        this.websocketOpen();
+        that.websocketOpen();
       };
       //连接发生错误的回调方法
       this.websock.onerror = function() {
