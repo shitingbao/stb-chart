@@ -1,11 +1,23 @@
 <template>
   <div class="login">
-    <div>
-      <el-input placeholder="请输入内容" v-model="username" clearable></el-input>
-      <el-input placeholder="请输入密码" v-model="pwd" show-password></el-input>
-      <el-button type="primary" @click="login">登录</el-button>
+    <div class="login-title">标识图片</div>
+    <h1>Sign in to StbWeb</h1>
+    <div class="login-table">
+      <label>Username or email address</label>
+      <el-input placeholder v-model="username" clearable></el-input>
+      <label class="login-table-password-title">
+        Password
+        <a>Forgot password?</a>
+      </label>
+      <el-input placeholder v-model="pwd" show-password></el-input>
+      <el-button class="login-table-signin" type="primary" @click="login">Sign&nbsp;in</el-button>
     </div>
-    <el-button type="primary" @click="register">注册</el-button>
+    <div class="create-table">
+      <label class="create-table-password-title">
+        New to GitHub?
+        <a @click="register">Create an account.</a>
+      </label>
+    </div>
   </div>
 </template>
 
@@ -69,6 +81,76 @@ export default {
   margin: 0px;
   width: 100%;
   height: 100%;
-  background: yellow;
+  // background: yellow;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  .login-title {
+    padding-top: 25px;
+    padding-bottom: 25px;
+    height: 49px;
+  }
+  h1 {
+    color: #333;
+    text-align: center;
+    text-shadow: none;
+    margin: 0px;
+    font-size: 24px;
+    font-weight: 100;
+    letter-spacing: -0.5px;
+    padding-bottom: 20px;
+  }
+  .login-table {
+    display: flex;
+    flex-direction: column;
+    width: 308px;
+    justify-content: center;
+    padding: 20px;
+    font-size: 14px;
+    background-color: #fff;
+    border: 1px solid #d8dee2;
+    border-top: 1px solid #d8dee2;
+    border-radius: 5px;
+    .login-table-password-title {
+      padding-top: 15px;
+      justify-content: space-between;
+      a {
+        color: #0366d6;
+        text-decoration: none;
+        font-size: 12px;
+        cursor: pointer;
+      }
+    }
+    label {
+      display: flex;
+      justify-content: flex-start;
+      margin-bottom: 7px;
+      font-weight: 500;
+      font-size: 14px;
+    }
+    .login-table-signin {
+      margin-top: 15px;
+    }
+  }
+  .create-table {
+    display: flex;
+    flex-direction: column;
+    width: 308px;
+    justify-content: center;
+    padding: 20px;
+    font-size: 14px;
+    background-color: #fff;
+    border: 1px solid #d8dee2;
+    border-top: 1px solid #d8dee2;
+    border-radius: 5px;
+    margin-top: 20px;
+    .create-table-password-title {
+      a {
+        color: #0366d6;
+        text-decoration: none;
+        cursor: pointer;
+      }
+    }
+  }
 }
 </style>
