@@ -18,6 +18,7 @@
         <el-menu-item index="imageupload">图片文字转换</el-menu-item>
         <el-menu-item index="comparison">文件内容比较</el-menu-item>
         <el-menu-item index="game">game</el-menu-item>
+        <el-menu-item index="excelToCsv">excelToCsv</el-menu-item>
         <el-menu-item index="test">test</el-menu-item>
         <el-submenu index="2-4">
           <template slot="title">待定0</template>
@@ -39,6 +40,7 @@
       <FileComparison v-if="selectPage==='comparison'"></FileComparison>
       <Test v-if="selectPage==='test'"></Test>
       <DoubleBuckle v-if="selectPage=='game'"></DoubleBuckle>
+      <ExcelToCsv v-if="selectPage=='excelToCsv'"></ExcelToCsv>
     </div>
   </div>
 </template>
@@ -49,9 +51,11 @@ import ChatRoom from "./library/ChatRoom";
 import ImageUpload from "./library/ImageUpload";
 import FileComparison from "./library/FileComparison";
 import Test from "./library/Test";
+import ExcelToCsv from "./library/ExcelToCsv";
 import DoubleBuckle from "./game/DoubleBuckle";
 export default {
   components: {
+    ExcelToCsv,
     DoubleBuckle,
     ExcelOpera,
     Chart,
