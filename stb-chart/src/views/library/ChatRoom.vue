@@ -1,11 +1,13 @@
 <template>
   <!-- 版本方法原版在socket.js文件中 -->
   <div>
-    <el-button v-if="sockStart" type="primary" @click="reConnect" plain>重新连接</el-button>
+    <el-button v-if="sockStart" type="primary" @click="reConnect" plain
+      >重新连接</el-button
+    >
     <el-input v-model="word" placeholder="内容"></el-input>
     <button @click="send()">发送</button>
     <ul>
-      <li v-for="(item,index) in userWord" :key="index">{{item }}</li>
+      <li v-for="(item, index) in userWord" :key="index">{{ item }}</li>
     </ul>
   </div>
 </template>
@@ -110,5 +112,4 @@ export default {
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped lang="scss">
-</style>
+<style scoped lang="scss"></style>

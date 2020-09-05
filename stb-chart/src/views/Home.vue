@@ -15,7 +15,7 @@
         <el-menu-item index="excel">excel操作</el-menu-item>
         <el-menu-item index="chart">echart例子</el-menu-item>
         <el-menu-item index="chatroom">聊天室</el-menu-item>
-        <el-menu-item index="imageupload">图片文字转换</el-menu-item>
+        <el-menu-item index="imageupload">图片文字提取</el-menu-item>
         <el-menu-item index="comparison">文件内容比较</el-menu-item>
         <el-menu-item index="game">game</el-menu-item>
         <el-menu-item index="excelToCsv">excelToCsv</el-menu-item>
@@ -33,14 +33,14 @@
       </el-menu-item>
     </el-menu>
     <div>
-      <ExcelOpera v-if="selectPage==='excel'"></ExcelOpera>
-      <Chart v-if="selectPage==='chart'"></Chart>
-      <ChatRoom v-if="selectPage==='chatroom'"></ChatRoom>
-      <ImageUpload v-if="selectPage==='imageupload'"></ImageUpload>
-      <FileComparison v-if="selectPage==='comparison'"></FileComparison>
-      <Test v-if="selectPage==='test'"></Test>
-      <DoubleBuckle v-if="selectPage=='game'"></DoubleBuckle>
-      <ExcelToCsv v-if="selectPage=='excelToCsv'"></ExcelToCsv>
+      <ExcelOpera v-if="selectPage === 'excel'"></ExcelOpera>
+      <Chart v-if="selectPage === 'chart'"></Chart>
+      <ChatRoom v-if="selectPage === 'chatroom'"></ChatRoom>
+      <ImageUpload v-if="selectPage === 'imageupload'"></ImageUpload>
+      <FileComparison v-if="selectPage === 'comparison'"></FileComparison>
+      <Test v-if="selectPage === 'test'"></Test>
+      <DoubleBuckle v-if="selectPage == 'game'"></DoubleBuckle>
+      <ExcelToCsv v-if="selectPage == 'excelToCsv'"></ExcelToCsv>
     </div>
   </div>
 </template>

@@ -1,7 +1,6 @@
-
 <template>
   <!-- echart测试示例 -->
-  <div id="myChart" :style="{width: '300px', height: '300px'}"></div>
+  <div id="myChart" :style="{ width: '300px', height: '300px' }"></div>
 </template>
 
 <script>

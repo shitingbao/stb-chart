@@ -9,8 +9,15 @@
         Password
         <a>Forgot password?</a>
       </label>
-      <el-input placeholder v-model="pwd" show-password></el-input>
-      <el-button class="login-table-signin" type="primary" @click="login">Sign&nbsp;in</el-button>
+      <el-input
+        placeholder
+        v-model="pwd"
+        show-password
+        @keyup.enter.native="login"
+      ></el-input>
+      <el-button class="login-table-signin" type="primary" @click="login"
+        >Sign&nbsp;in</el-button
+      >
     </div>
     <div class="create-table">
       <label class="create-table-password-title">
@@ -77,11 +84,6 @@ export default {
 <style scoped lang="scss">
 .login {
   display: flex;
-  padding: 0px;
-  margin: 0px;
-  width: 100%;
-  height: 100%;
-  // background: yellow;
   flex-direction: column;
   justify-content: center;
   align-items: center;
