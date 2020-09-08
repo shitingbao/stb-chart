@@ -1,6 +1,7 @@
 <template>
   <div>
     <h2>图片文字提取</h2>
+    <div class="tableTitle"><span class="midText">我是分割线</span></div>
     <div class="img-word">
       <div class="img-word-left">
         <el-upload
@@ -28,32 +29,55 @@
         >
         <h4>上传历史</h4>
         <div class="img-history">
-          <ul>
-            <li v-for="(item, index) in fileHistoryName" :key="index">
-              {{ item }}
-            </li>
-          </ul>
+          <!-- <ul> -->
+          <div
+            v-for="(item, index) in fileHistoryName"
+            :key="index"
+            @click="selectHistory(item)"
+          >
+            {{ item }}
+          </div>
+          <!-- </ul> -->
         </div>
       </div>
-      <div>
-        显示文字
-        <ul>
-          <li v-for="(item, index) in wordData" :key="index">{{ item }}</li>
-        </ul>
+      <div class="word-show">
+        <h4>提取内容</h4>
+        <editor
+          v-model="wordData"
+          @init="editorInit"
+          lang="html"
+          theme="chrome"
+          width="500"
+          height="100"
+        ></editor>
+        123
+        <div class="word" v-for="(item, index) in wordData" :key="index">
+          {{ item }}
+        </div>
       </div>
     </div>
   </div>
 </template>
 
 <script lang="ts">
+import require from "typescript";
 export default {
   name: "ImageUpload",
   data() {
     return {
+      fileNameNum: 0, //防止相同名称文件多次输入，文件名与数据对应出问题
       formFileList: [], //保存要提交的文件内容
       wordData: [], //保存解析出来的文字
       isFileSelect: false, //是否显示选择的文件名，图标
-      fileHistoryList: [{ name: "", data: "" }], //保存历史查询数据，文件名称对应数据
+      fileHistoryList: [
+        {
+          name: "1",
+          data: [
+            "123465798456137981234657984561379812346579845613798123465798456137981234657984561379812346579845613798123465798456137981234657984561379812346579845613798123465798456137981234657984561379812346579845613798123465798456137981234657984561379812346579845613798",
+            "1"
+          ]
+        }
+      ], //保存历史查询数据，文件名称对应数据
       fileHistoryName: [
         "1",
         "1",
@@ -90,6 +114,14 @@ export default {
     };
   },
   methods: {
+    editorInit() {
+      require("brace/ext/language_tools"); //language extension prerequsite...
+      require("brace/mode/html");
+      require("brace/mode/javascript"); //language
+      require("brace/mode/less");
+      require("brace/theme/chrome");
+      require("brace/snippets/javascript"); //snippet
+    },
     submitUpload() {
       this.isFileSelect = false;
       let param = new FormData(); // 创建form对象
@@ -113,16 +145,38 @@ export default {
           }
         }
         that.wordData = resData;
-        this.fileHistoryList.push({ name: this.filename, data: that.wordData });
-        this.fileHistoryName.push(this.filename);
+        let num = this.selectSameFile(this.filename);
+        let named = this.filename; //不直接使用文件名，如果遇到相同文件名称已经存在，就文件名后+1.如：新建文件夹（1）
+        if (num > 0) {
+          named = this.filename + "(" + num + ")";
+        }
+        console.log(num, ":", named);
+        this.fileHistoryList.push({ name: named, data: that.wordData });
+        this.fileHistoryName.push(named);
       });
       this.formFileList = [];
     },
-
+    selectSameFile(filename) {
+      let num = 0;
+      this.fileHistoryName.forEach(element => {
+        if (element == filename) {
+          num++;
+        }
+      });
+      return num;
+    },
     change(file) {
       this.isFileSelect = true;
       this.filename = file.name;
       this.formFileList.push(file);
+    },
+    selectHistory(filename) {
+      this.fileHistoryList.forEach(element => {
+        if (element.name == filename) {
+          this.wordData = element.data;
+          console.log(element.data);
+        }
+      });
     }
   }
 };
@@ -132,7 +186,8 @@ export default {
   display: flex;
   flex-direction: row;
   .img-word-left {
-    width: 35%;
+    flex-grow: 1;
+    // width: 35%;
     .upload {
       height: 200px;
       overflow-y: auto;
@@ -156,7 +211,37 @@ export default {
       padding-top: 20px;
       height: 400px;
       overflow: auto;
+      flex-direction: column;
+      cursor: pointer;
     }
   }
+  .word-show {
+    // height: 600px;
+    flex-grow: 5;
+    overflow: auto;
+    padding: 0px 50px;
+    .word {
+      display: flex;
+      overflow: auto;
+    }
+  }
+}
+.tableTitle {
+  position: relative;
+  margin: 0 auto;
+  width: 1000px;
+  height: 1px;
+  background-color: #d4d4d4;
+  text-align: center;
+  font-size: 16px;
+  color: rgba(101, 101, 101, 1);
+  margin-bottom: 20px;
+}
+.midText {
+  position: absolute;
+  left: 50%;
+  background-color: #ffffff;
+  padding: 0 15px;
+  transform: translateX(-50%) translateY(-50%);
 }
 </style>
