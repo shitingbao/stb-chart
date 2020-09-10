@@ -43,28 +43,32 @@
       <div class="word-show">
         <h4>提取内容</h4>
         <editor
-          v-model="wordData"
+          ref="edit"
+          v-model="content"
           @init="editorInit"
           lang="html"
           theme="chrome"
-          width="500"
-          height="100"
+          width="100%"
+          height="80%"
         ></editor>
-        123
+        <!-- 
         <div class="word" v-for="(item, index) in wordData" :key="index">
           {{ item }}
-        </div>
+        </div> -->
       </div>
     </div>
   </div>
 </template>
 
 <script lang="ts">
-import require from "typescript";
 export default {
   name: "ImageUpload",
+  components: {
+    editor: require("vue2-ace-editor")
+  },
   data() {
     return {
+      content: "123",
       fileNameNum: 0, //防止相同名称文件多次输入，文件名与数据对应出问题
       formFileList: [], //保存要提交的文件内容
       wordData: [], //保存解析出来的文字
@@ -78,38 +82,7 @@ export default {
           ]
         }
       ], //保存历史查询数据，文件名称对应数据
-      fileHistoryName: [
-        "1",
-        "1",
-        "1",
-        "1",
-        "1",
-        "1",
-        "1",
-        "1",
-        "1",
-        "1",
-        "1",
-        "1",
-        "1",
-        "1",
-        "1",
-        "1",
-        "1",
-        "1",
-        "1",
-        "1",
-        "1",
-        "1",
-        "1",
-        "1",
-        "1",
-        "1",
-        "1",
-        "1",
-        "1",
-        "1"
-      ], //保存历史查询文件名称，用来对应数据
+      fileHistoryName: ["1"], //保存历史查询文件名称，用来对应数据
       filename: "" //选择的文件名称
     };
   },
@@ -121,6 +94,11 @@ export default {
       require("brace/mode/less");
       require("brace/theme/chrome");
       require("brace/snippets/javascript"); //snippet
+      require("brace/mode/json");
+      require("brace/snippets/json");
+      let _this = this;
+      _this.$refs.edit.editor.setShowFoldWidgets(true);
+      _this.$refs.edit.editor.setReadOnly(true); //是否为只读
     },
     submitUpload() {
       this.isFileSelect = false;
@@ -145,6 +123,7 @@ export default {
           }
         }
         that.wordData = resData;
+        that.content = JSON.stringify(response.data, null, "\t");
         let num = this.selectSameFile(this.filename);
         let named = this.filename; //不直接使用文件名，如果遇到相同文件名称已经存在，就文件名后+1.如：新建文件夹（1）
         if (num > 0) {
@@ -186,6 +165,7 @@ export default {
   display: flex;
   flex-direction: row;
   .img-word-left {
+    padding: 0px 10px;
     flex-grow: 1;
     // width: 35%;
     .upload {
