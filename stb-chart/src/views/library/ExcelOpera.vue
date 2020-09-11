@@ -7,18 +7,26 @@
       :on-change="importCsv"
       :auto-upload="false"
     >
-      <el-button slot="trigger" icon="el-icon-upload" size="small" type="primary">选择解析文件</el-button>
+      <el-button
+        slot="trigger"
+        icon="el-icon-upload"
+        size="small"
+        type="primary"
+        >选择解析文件</el-button
+      >
     </el-upload>
     <br />
-    <el-button type="primary" @click="exportExcel" plain>生成并下载excel文件</el-button>
+    <el-button type="primary" @click="exportExcel" plain
+      >生成并下载excel文件</el-button
+    >
     <div>
       <span>选择的文件名称：</span>
-      <span>{{filename}}</span>
+      <span>{{ filename }}</span>
     </div>
     <div>
       <span>文件内容：</span>
       <br />
-      <span v-for="(i,val) in filecontent" :key="val">{{i}}--{{val}}</span>
+      <span v-for="(i, val) in filecontent" :key="val">{{ i }}--{{ val }}</span>
     </div>
   </div>
 </template>

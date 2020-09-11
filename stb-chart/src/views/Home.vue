@@ -2,7 +2,7 @@
   <div id="app">
     <el-menu
       :default-active="activeIndex"
-      class="el-menu-demo"
+      class="el-menu-demo title"
       mode="horizontal"
       @select="handleSelect"
       background-color="#545c64"
@@ -12,8 +12,8 @@
       <el-menu-item index="1">主页</el-menu-item>
       <el-submenu index="2">
         <template slot="title">功能选择项</template>
-        <el-menu-item index="excel">excel操作</el-menu-item>
-        <el-menu-item index="chart">echart例子</el-menu-item>
+        <!-- <el-menu-item index="excel">excel操作</el-menu-item> -->
+        <!-- <el-menu-item index="chart">echart例子</el-menu-item> -->
         <el-menu-item index="chatroom">聊天室</el-menu-item>
         <el-menu-item index="imageupload">图片文字提取</el-menu-item>
         <el-menu-item index="comparison">文件内容比较</el-menu-item>
@@ -32,9 +32,9 @@
         <span>用户管理</span>
       </el-menu-item>
     </el-menu>
-    <div>
-      <ExcelOpera v-if="selectPage === 'excel'"></ExcelOpera>
-      <Chart v-if="selectPage === 'chart'"></Chart>
+    <div class="library">
+      <!-- <ExcelOpera v-if="selectPage === 'excel'"></ExcelOpera> -->
+      <!-- <Chart v-if="selectPage === 'chart'"></Chart> -->
       <ChatRoom v-if="selectPage === 'chatroom'"></ChatRoom>
       <ImageUpload v-if="selectPage === 'imageupload'"></ImageUpload>
       <FileComparison v-if="selectPage === 'comparison'"></FileComparison>
@@ -45,8 +45,8 @@
   </div>
 </template>
 <script>
-import ExcelOpera from "./library/ExcelOpera";
-import Chart from "./library/Chart";
+// import ExcelOpera from "./library/ExcelOpera";
+// import Chart from "./library/Chart";
 import ChatRoom from "./library/ChatRoom";
 import ImageUpload from "./library/ImageUpload";
 import FileComparison from "./library/FileComparison";
@@ -57,8 +57,8 @@ export default {
   components: {
     ExcelToCsv,
     DoubleBuckle,
-    ExcelOpera,
-    Chart,
+    // ExcelOpera,
+    // Chart,
     ChatRoom,
     ImageUpload,
     FileComparison,
@@ -91,18 +91,17 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-}
-
-#nav {
-  padding: 30px;
-
-  a {
-    font-weight: bold;
-    color: #2c3e50;
-
-    &.router-link-exact-active {
-      color: #42b983;
-    }
+  display: flex;
+  flex-direction: column;
+  width: 100;
+  height: 100%;
+  .title {
+    width: 100%;
+    border-bottom: solid 0px #e6e6e6;
+  }
+  .library {
+    flex: 1;
+    width: 100%;
   }
 }
 </style>

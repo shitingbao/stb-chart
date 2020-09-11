@@ -7,7 +7,13 @@
       :on-change="importCsv"
       :auto-upload="false"
     >
-      <el-button slot="trigger" icon="el-icon-upload" size="small" type="primary">选择解析文件</el-button>
+      <el-button
+        slot="trigger"
+        icon="el-icon-upload"
+        size="small"
+        type="primary"
+        >选择解析文件</el-button
+      >
     </el-upload>
   </div>
 </template>

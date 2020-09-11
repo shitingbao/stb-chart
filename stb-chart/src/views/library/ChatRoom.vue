@@ -1,14 +1,44 @@
 <template>
   <!-- 版本方法原版在socket.js文件中 -->
-  <div>
-    <el-button v-if="sockStart" type="primary" @click="reConnect" plain
-      >重新连接</el-button
-    >
-    <el-input v-model="word" placeholder="内容"></el-input>
-    <button @click="send()">发送</button>
-    <ul>
-      <li v-for="(item, index) in userWord" :key="index">{{ item }}</li>
-    </ul>
+  <!-- <div class="chat-room">
+    <div class="chat-room-head">
+      <el-button v-if="sockStart" type="primary" @click="reConnect" plain
+        >重新连接</el-button
+      >
+    </div>
+
+    <div class="chat-room-word">
+      <div v-for="(item, index) in userWord" :key="index">{{ item }}</div>
+    </div>
+    <div class="chat-room-send">
+      <el-input v-model="word" placeholder="内容"></el-input>
+      <button @click="send()">发送</button>
+    </div>
+  </div> -->
+  <div class="container">
+    <div class="header">
+      公共聊天室<el-button
+        v-if="sockStart"
+        type="primary"
+        @click="reConnect"
+        plain
+        >重新连接</el-button
+      >
+    </div>
+    <div class="main">
+      <div class="main-chat" v-for="(item, index) in userWord" :key="index">
+        <div class="main-chat-title">
+          <span>{{ item.name }}</span
+          ><span>{{ item.date }}</span>
+        </div>
+        <div class="main-chat-word">{{ item.data }}</div>
+      </div>
+    </div>
+    <div class="footer">
+      <el-input v-model="word" placeholder="内容"></el-input>
+      <el-button type="primary" @click="send()" plain>发送</el-button>
+      <!-- <button @click="send()">发送</button> -->
+    </div>
   </div>
 </template>
 
@@ -22,7 +52,13 @@ export default {
     return {
       word: "",
       host: "124.70.156.31:3002/sockets/chat",
-      userWord: [],
+      userWord: [
+        { name: "shitingbao", date: "2020-09-11", data: "123" },
+        { name: "aa", date: "2020-09-11", data: "123" },
+        { name: "aa", date: "2020-09-11", data: "123" },
+        { name: "aa", date: "2020-09-11", data: "123" },
+        { name: "aa", date: "2020-09-11", data: "123" }
+      ],
       username: "",
       websock: {},
       sockStart:
@@ -111,5 +147,45 @@ export default {
 };
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped lang="scss"></style>
+<style scoped lang="scss">
+.container {
+  display: flex;
+  width: 100%;
+  height: 800px;
+  flex-direction: column;
+  // background: url("../../assets/aa.jpg") no-repeat;
+  // background-size: 100% 100%;
+  .header {
+    height: 50px;
+  }
+  .footer {
+    display: flex;
+    flex-direction: row;
+    height: 40px;
+    margin-left: 400px;
+    margin-right: 400px;
+  }
+  .main {
+    background: #ccc;
+    // background: url("../../assets/jpg.jpg") no-repeat;
+    // background-size: 60% 100%;
+    flex: 1;
+    overflow: auto;
+    margin-left: 400px;
+    margin-right: 400px;
+    .main-chat {
+      display: flex;
+      flex-direction: column;
+
+      .main-chat-title {
+        display: flex;
+        flex-direction: row;
+        justify-content: flex-start;
+      }
+      .main-chat-word {
+        display: flex;
+      }
+    }
+  }
+}
+</style>
