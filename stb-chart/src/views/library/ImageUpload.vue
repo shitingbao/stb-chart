@@ -20,27 +20,26 @@
           <i v-else class="el-icon-plus avatar-uploader-icon"></i>
           <div v-if="isFileSelect" class="avatar-filename">{{ filename }}</div>
         </el-upload>
-        <!-- <div v-if="isFileSelect">{{ filename }}</div> -->
-        <el-button class="upload-button" @click="submitUpload" round
+
+        <el-button class="upload-button" @click="clear" round
           >清空选择</el-button
         >
         <el-button class="upload-button" @click="submitUpload" round
           >提交</el-button
         >
         <h4>上传历史</h4>
-        <div class="img-history">
-          <!-- <ul> -->
+        <div class="img-history-list">
           <div
+            class="img-history-select"
             v-for="(item, index) in fileHistoryName"
             :key="index"
             @click="selectHistory(item)"
           >
             {{ item }}
           </div>
-          <!-- </ul> -->
         </div>
       </div>
-      <div class="word-show">
+      <div class="img-word-right">
         <h4>提取内容</h4>
         <editor
           ref="edit"
@@ -51,10 +50,6 @@
           width="100%"
           height="80%"
         ></editor>
-        <!-- 
-        <div class="word" v-for="(item, index) in wordData" :key="index">
-          {{ item }}
-        </div> -->
       </div>
     </div>
   </div>
@@ -71,15 +66,11 @@ export default {
       content: "123",
       fileNameNum: 0, //防止相同名称文件多次输入，文件名与数据对应出问题
       formFileList: [], //保存要提交的文件内容
-      wordData: [], //保存解析出来的文字
       isFileSelect: false, //是否显示选择的文件名，图标
       fileHistoryList: [
         {
           name: "1",
-          data: [
-            "123465798456137981234657984561379812346579845613798123465798456137981234657984561379812346579845613798123465798456137981234657984561379812346579845613798123465798456137981234657984561379812346579845613798123465798456137981234657984561379812346579845613798",
-            "1"
-          ]
+          data: ""
         }
       ], //保存历史查询数据，文件名称对应数据
       fileHistoryName: ["1"], //保存历史查询文件名称，用来对应数据
@@ -107,7 +98,7 @@ export default {
         param.append(i + "", this.formFileList[i].raw); // 通过append向form对象添加数据
       }
       param.append("chunk", "0"); // 添加form表单中其他数据
-      // console.log(param.get("file")); // FormData私有类对象，访问不到，可以通过get判断值是否传进去
+      // FormData私有类对象，访问不到，可以通过get判断值是否传进去
       let config = {
         headers: { "Content-Type": "multipart/form-data" }
       };
@@ -118,11 +109,9 @@ export default {
         // console.log(response.data[0].words_result);
         for (let j = 0; j < response.data.length; j++) {
           for (let i = 0; i < response.data[j].words_result.length; i++) {
-            // console.log("data:", response.data[j].words_result[i].Words);
             resData.push(response.data[j].words_result[i].Words);
           }
         }
-        that.wordData = resData;
         that.content = JSON.stringify(response.data, null, "\t");
         let num = this.selectSameFile(this.filename);
         let named = this.filename; //不直接使用文件名，如果遇到相同文件名称已经存在，就文件名后+1.如：新建文件夹（1）
@@ -130,7 +119,7 @@ export default {
           named = this.filename + "(" + num + ")";
         }
         console.log(num, ":", named);
-        this.fileHistoryList.push({ name: named, data: that.wordData });
+        this.fileHistoryList.push({ name: named, data: that.content });
         this.fileHistoryName.push(named);
       });
       this.formFileList = [];
@@ -152,10 +141,14 @@ export default {
     selectHistory(filename) {
       this.fileHistoryList.forEach(element => {
         if (element.name == filename) {
-          this.wordData = element.data;
-          console.log(element.data);
+          this.content = element.data;
         }
       });
+    },
+    clear() {
+      this.isFileSelect = false;
+      this.filename = "";
+      this.formFileList = [];
     }
   }
 };
@@ -185,17 +178,19 @@ export default {
         position: absolute;
       }
     }
-    .img-history {
+    .img-history-list {
       display: flex;
-      justify-content: center;
+      // justify-content: center;
       padding-top: 20px;
       height: 400px;
       overflow: auto;
       flex-direction: column;
-      cursor: pointer;
+      .img-history-select {
+        cursor: pointer;
+      }
     }
   }
-  .word-show {
+  .img-word-right {
     // height: 600px;
     flex-grow: 5;
     overflow: auto;
