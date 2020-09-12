@@ -1,43 +1,45 @@
 <template>
   <!-- 版本方法原版在socket.js文件中 -->
-  <!-- <div class="chat-room">
-    <div class="chat-room-head">
-      <el-button v-if="sockStart" type="primary" @click="reConnect" plain
-        >重新连接</el-button
-      >
-    </div>
-
-    <div class="chat-room-word">
-      <div v-for="(item, index) in userWord" :key="index">{{ item }}</div>
-    </div>
-    <div class="chat-room-send">
-      <el-input v-model="word" placeholder="内容"></el-input>
-      <button @click="send()">发送</button>
-    </div>
-  </div> -->
   <div class="container">
+    <el-button
+      class="reconnect"
+      v-if="reconnect"
+      type="primary"
+      @click="reConnect"
+      plain
+      >重新连接</el-button
+    >
+
     <div class="header">
-      公共聊天室<el-button
-        v-if="sockStart"
-        type="primary"
-        @click="reConnect"
-        plain
-        >重新连接</el-button
-      >
+      <h2>公共聊天室</h2>
     </div>
     <div class="main">
       <div class="main-chat" v-for="(item, index) in userWord" :key="index">
-        <div class="main-chat-title">
-          <span>{{ item.name }}</span
-          ><span>{{ item.date }}</span>
+        <div
+          :class="
+            item.User == username ? 'main-chat-title-mine' : 'main-chat-title'
+          "
+        >
+          <span class="word-name">{{ item.User }}</span
+          ><span>{{ item.DateTime }}</span>
         </div>
-        <div class="main-chat-word">{{ item.data }}</div>
+        <div
+          :class="
+            item.User == username ? 'main-chat-word-mine' : 'main-chat-word'
+          "
+        >
+          <span
+            :class="
+              item.User == username ? 'word word-right' : 'word word-left'
+            "
+            >{{ item.Data }}</span
+          >
+        </div>
       </div>
     </div>
     <div class="footer">
       <el-input v-model="word" placeholder="内容"></el-input>
       <el-button type="primary" @click="send()" plain>发送</el-button>
-      <!-- <button @click="send()">发送</button> -->
     </div>
   </div>
 </template>
@@ -50,14 +52,20 @@ export default {
   },
   data() {
     return {
+      reconnect: false,
       word: "",
       host: "124.70.156.31:3002/sockets/chat",
       userWord: [
-        { name: "shitingbao", date: "2020-09-11", data: "123" },
-        { name: "aa", date: "2020-09-11", data: "123" },
-        { name: "aa", date: "2020-09-11", data: "123" },
-        { name: "aa", date: "2020-09-11", data: "123" },
-        { name: "aa", date: "2020-09-11", data: "123" }
+        { User: "shitingbao", DateTime: "2020-09-11", Data: "123" },
+        {
+          User: "aa",
+          DateTime: "2020-09-11",
+          Data:
+            "123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123"
+        },
+        { User: "aa", DateTime: "2020-09-11", Data: "123" },
+        { User: "aa", DateTime: "2020-09-11", Data: "123" },
+        { User: "aa", DateTime: "2020-09-11", Data: "123" }
       ],
       username: "",
       websock: {},
@@ -78,6 +86,7 @@ export default {
       this.initWebSocket(localStorage.getItem("token"));
       setTimeout(() => {
         loading.close();
+        this.reconnect = false;
       }, 1000);
     },
     send() {
@@ -98,8 +107,8 @@ export default {
       var wsuri = "ws://" + this.host;
       this.websock = new WebSocket(wsuri, user);
       this.websock.onmessage = function(e) {
-        console.log("接收的数据为：", e.data);
-        that.userWord.push(e.data);
+        // console.log("接收的数据为：", e.data.User);
+        that.userWord.push(JSON.parse(e.data));
       };
       this.websock.onclose = function(e) {
         that.websocketclose(e);
@@ -110,6 +119,7 @@ export default {
       //连接发生错误的回调方法
       this.websock.onerror = function() {
         console.log("WebSocket连接发生错误");
+        this.reconnect = true;
       };
     },
     // 实际调用的方法
@@ -135,14 +145,17 @@ export default {
     },
     //关闭
     websocketclose(e) {
+      this.reconnect = true;
       console.log("connection closed (" + e.code + ")");
     },
     websocketOpen() {
+      this.reconnect = false;
       console.log("连接成功");
     }
   },
   mounted() {
     this.initWebSocket(localStorage.getItem("token"));
+    this.username = localStorage.getItem("username");
   }
 };
 </script>
@@ -150,7 +163,7 @@ export default {
 <style scoped lang="scss">
 .container {
   display: flex;
-  width: 100%;
+  // width: 100%;
   height: 800px;
   flex-direction: column;
   // background: url("../../assets/aa.jpg") no-repeat;
@@ -166,17 +179,17 @@ export default {
     margin-right: 400px;
   }
   .main {
-    background: #ccc;
+    // background: #ccc;
     // background: url("../../assets/jpg.jpg") no-repeat;
     // background-size: 60% 100%;
     flex: 1;
     overflow: auto;
-    margin-left: 400px;
-    margin-right: 400px;
+    margin-left: 350px;
+    margin-right: 350px;
     .main-chat {
       display: flex;
       flex-direction: column;
-
+      padding: 5px;
       .main-chat-title {
         display: flex;
         flex-direction: row;
@@ -184,8 +197,59 @@ export default {
       }
       .main-chat-word {
         display: flex;
+        flex-direction: row;
+        justify-content: flex-start;
+
+        // width: 15px;
+      }
+      .main-chat-title-mine {
+        display: flex;
+        flex-direction: row;
+        justify-content: flex-end;
+      }
+      .main-chat-word-mine {
+        display: flex;
+        flex-direction: row;
+        justify-content: flex-end;
+
+        // width: 15px;
       }
     }
   }
+}
+.word {
+  padding: 5px;
+  background: #ccc;
+  border-radius: 5px;
+  // display: inline-block;
+  font-size: 14px;
+  color: #303030;
+  line-height: 1.6;
+  font-family: "微软雅黑";
+  // width: 400px;
+  word-wrap: break-word;
+  word-break: break-all;
+  overflow: hidden;
+}
+.word-left {
+  text-align: left;
+}
+.word-right {
+  text-align: right;
+}
+.word-name {
+  padding-right: 10px;
+}
+.reconnect {
+  padding: 20px;
+  // background: orange;
+  color: #fff;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  border-radius: 5px;
+  -webkit-transform: translate(-50%, -50%);
+  -moz-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
 }
 </style>
