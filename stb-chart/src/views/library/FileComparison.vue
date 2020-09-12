@@ -1,14 +1,7 @@
 <template>
-  <div>
-    <el-button type="primary" @click="upload" plain>比较</el-button>
-    <div class="comparison">
-      <el-upload
-        :on-change="leftChange"
-        class="upload-demo"
-        drag
-        action
-        multiple
-      >
+  <div class="comparison">
+    <div class="comparison-left">
+      <el-upload :on-change="leftChange" class="upload" drag action multiple>
         <i class="el-icon-upload"></i>
         <div class="el-upload__text">
           将文件拖到此处，或
@@ -19,13 +12,7 @@
         </div>
       </el-upload>
 
-      <el-upload
-        :on-change="rightChange"
-        class="upload-demo"
-        drag
-        action
-        multiple
-      >
+      <el-upload :on-change="rightChange" class="upload" drag action multiple>
         <i class="el-icon-upload"></i>
         <div class="el-upload__text">
           将文件拖到此处，或
@@ -35,34 +22,43 @@
           只能上传jpg/png文件，且不超过500kb
         </div>
       </el-upload>
+      <el-button class="compare-button" type="primary" @click="submit" plain
+        >比较</el-button
+      >
     </div>
-    <editor
-      v-model="sameContent"
-      @init="editorInit"
-      :options="options"
-      lang="json"
-      theme="chrome"
-      width="500"
-      height="500"
-    ></editor>
-    <div class="comparison">
-      <editor
-        v-model="leftContent"
-        @init="editorInit"
-        lang="json"
-        theme="chrome"
-        width="500"
-        height="100"
-      ></editor>
-      <editor
-        v-model="rightContent"
-        @init="editorInit"
-        :options="options"
-        lang="json"
-        theme="chrome"
-        width="500"
-        height="500"
-      ></editor>
+    <div class="comparison-right">
+      <el-tabs v-model="activeName" @tab-click="handleClick">
+        <el-tab-pane label="相同内容" name="first"
+          ><editor
+            v-model="sameContent"
+            @init="editorInit"
+            :options="options"
+            lang="json"
+            theme="chrome"
+            width="500"
+            height="700"
+          ></editor
+        ></el-tab-pane>
+        <el-tab-pane class="word-different" label="不同内容" name="second"
+          ><editor
+            v-model="leftContent"
+            @init="editorInit"
+            lang="json"
+            theme="chrome"
+            width="500"
+            height="700"
+          ></editor>
+          <editor
+            v-model="rightContent"
+            @init="editorInit"
+            :options="options"
+            lang="json"
+            theme="chrome"
+            width="500"
+            height="700"
+          ></editor>
+        </el-tab-pane>
+      </el-tabs>
     </div>
   </div>
 </template>
@@ -75,6 +71,7 @@ export default {
   },
   data() {
     return {
+      activeName: "second",
       msg: "FileComparison",
       leftContent: "",
       rightContent: "",
@@ -93,6 +90,9 @@ export default {
   },
   mounted() {},
   methods: {
+    handleClick(tab, event) {
+      console.log(tab, event);
+    },
     show() {},
     editorInit: function() {
       require("brace/ext/language_tools"); //language extension prerequsite...
@@ -107,7 +107,7 @@ export default {
       require("brace/snippets/json");
       require("brace/snippets/html");
     },
-    upload() {
+    submit() {
       let param = new FormData(); // 创建form对象
       param.append("lsep", ","); // 添加form表单中其他数据
       param.append("listitle", "false"); // 添加form表单中其他数据
@@ -143,6 +143,25 @@ export default {
 .comparison {
   display: flex;
   flex-direction: row;
-  justify-content: center;
+  .comparison-left {
+    display: flex;
+    width: 400px;
+    flex-direction: column;
+    .upload {
+      padding-top: 40px;
+    }
+    .compare-button {
+      margin: 50px 20px 0px 20px;
+    }
+  }
+  .comparison-right {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    .word-different {
+      display: flex;
+      flex-direction: row;
+    }
+  }
 }
 </style>
