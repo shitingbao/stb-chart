@@ -68,7 +68,21 @@ export default {
       return hexCharCode.join("");
     }
   },
-  mounted() {},
+  mounted() {
+    let config = {
+      headers: { "stbweb-api": "check" }
+    };
+    let param = {
+      token: localStorage.getItem("token")
+    };
+    // 添加请求头
+    this.$http.post("/login", param, config).then(response => {
+      if (response.data.success) {
+        this.$router.push({ name: "home" });
+        return;
+      }
+    });
+  },
   data() {
     return {
       username: "",
