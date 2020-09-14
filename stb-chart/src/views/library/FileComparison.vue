@@ -1,11 +1,27 @@
 <template>
   <div class="comparison">
     <div class="comparison-left">
+      <div>
+        <h2>使用说明</h2>
+        <ul>
+          <li>选择的文件类型只支持xlsx，csv以及txt</li>
+          <li>csv文件分割符采用的是英文逗号 “ , ”</li>
+          <li>文本文件在上传时，注意编码格式的选择</li>
+          <li>结果以json形式反馈，数字是对应文件行号</li>
+        </ul>
+      </div>
+      <h4>选择第一个文件</h4>
       <div class="select-common">
-        <el-switch v-model="lIsGBK" active-text="utf8" inactive-text="gbk">
+        <el-switch
+          class="switch"
+          v-model="lIsGBK"
+          active-text="utf8"
+          inactive-text="gbk"
+        >
         </el-switch>
 
         <el-switch
+          class="switch"
           style="display: block"
           v-model="lIsTitle"
           active-color="#13ce66"
@@ -30,15 +46,18 @@
         <div v-if="isFileSelectLeft" class="avatar-filename">
           {{ filenameLeft }}
         </div>
-        <div class="el-upload__tip" slot="tip">
-          只能上传jpg/png文件，且不超过500kb
-        </div>
       </el-upload>
-
+      <h4>选择第二个文件</h4>
       <div class="select-common">
-        <el-switch v-model="rIsGBK" active-text="utf8" inactive-text="gbk">
+        <el-switch
+          class="switch"
+          v-model="rIsGBK"
+          active-text="utf8"
+          inactive-text="gbk"
+        >
         </el-switch>
         <el-switch
+          class="switch"
           style="display: block"
           v-model="rIsTitle"
           active-color="#13ce66"
@@ -62,9 +81,6 @@
         <i v-else class="el-icon-plus avatar-uploader-icon"></i>
         <div v-if="isFileSelectRight" class="avatar-filename">
           {{ filenameRight }}
-        </div>
-        <div class="el-upload__tip" slot="tip">
-          只能上传jpg/png文件，且不超过500kb
         </div>
       </el-upload>
       <el-button class="compare-button" type="primary" @click="submit" plain
@@ -221,7 +237,7 @@ export default {
     .select-common {
       display: flex;
       justify-content: center;
-      padding: 40px 0px 10px 0px;
+      padding: 0px 0px 10px 0px;
     }
     .compare-button {
       margin: 10px 20px 0px 20px;
@@ -246,5 +262,8 @@ export default {
 }
 .avatar-filename {
   margin-top: -20px;
+}
+.switch {
+  padding: 0px 10px 0px 10px;
 }
 </style>
