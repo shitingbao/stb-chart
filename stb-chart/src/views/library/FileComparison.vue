@@ -1,22 +1,67 @@
 <template>
   <div class="comparison">
     <div class="comparison-left">
-      <el-upload :on-change="leftChange" class="upload" drag action multiple>
-        <i class="el-icon-upload"></i>
-        <div class="el-upload__text">
-          将文件拖到此处，或
-          <em>点击上传</em>
+      <div class="select-common">
+        <el-switch v-model="lIsGBK" active-text="utf8" inactive-text="gbk">
+        </el-switch>
+
+        <el-switch
+          style="display: block"
+          v-model="lIsTitle"
+          active-color="#13ce66"
+          inactive-color="#ff4949"
+          active-text="有标题"
+          inactive-text="无标题"
+        >
+        </el-switch>
+      </div>
+      <el-upload
+        :on-change="leftChange"
+        class="upload"
+        drag
+        action="/"
+        :show-file-list="false"
+      >
+        <i
+          v-if="isFileSelectLeft"
+          class="el-icon-tickets avatar-uploader-icon "
+        ></i>
+        <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+        <div v-if="isFileSelectLeft" class="avatar-filename">
+          {{ filenameLeft }}
         </div>
         <div class="el-upload__tip" slot="tip">
           只能上传jpg/png文件，且不超过500kb
         </div>
       </el-upload>
 
-      <el-upload :on-change="rightChange" class="upload" drag action multiple>
-        <i class="el-icon-upload"></i>
-        <div class="el-upload__text">
-          将文件拖到此处，或
-          <em>点击上传</em>
+      <div class="select-common">
+        <el-switch v-model="rIsGBK" active-text="utf8" inactive-text="gbk">
+        </el-switch>
+        <el-switch
+          style="display: block"
+          v-model="rIsTitle"
+          active-color="#13ce66"
+          inactive-color="#ff4949"
+          active-text="有标题"
+          inactive-text="无标题"
+        >
+        </el-switch>
+      </div>
+      <el-upload
+        :on-change="rightChange"
+        class="upload"
+        :show-file-list="false"
+        drag
+        action="/"
+      >
+        <i
+          v-if="isFileSelectRight"
+          class="el-icon-tickets avatar-uploader-icon "
+        ></i>
+        <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+        <div v-if="isFileSelectRight" class="avatar-filename">
+          {{ filenameRight }}
         </div>
         <div class="el-upload__tip" slot="tip">
           只能上传jpg/png文件，且不超过500kb
@@ -25,9 +70,12 @@
       <el-button class="compare-button" type="primary" @click="submit" plain
         >比较</el-button
       >
+      <el-button class="compare-button" type="primary" @click="clear" plain
+        >清空</el-button
+      >
     </div>
     <div class="comparison-right">
-      <el-tabs v-model="activeName" @tab-click="handleClick">
+      <el-tabs v-model="activeName">
         <el-tab-pane label="相同内容" name="first"
           ><editor
             v-model="sameContent"
@@ -71,6 +119,14 @@ export default {
   },
   data() {
     return {
+      isFileSelectLeft: false,
+      filenameLeft: "",
+      isFileSelectRight: false,
+      filenameRight: "",
+      rIsGBK: true,
+      rIsTitle: true,
+      lIsGBK: true,
+      lIsTitle: true,
       activeName: "second",
       msg: "FileComparison",
       leftContent: "",
@@ -90,9 +146,6 @@ export default {
   },
   mounted() {},
   methods: {
-    handleClick(tab, event) {
-      console.log(tab, event);
-    },
     show() {},
     editorInit: function() {
       require("brace/ext/language_tools"); //language extension prerequsite...
@@ -109,10 +162,12 @@ export default {
     },
     submit() {
       let param = new FormData(); // 创建form对象
-      param.append("lsep", ","); // 添加form表单中其他数据
-      param.append("listitle", "false"); // 添加form表单中其他数据
-      param.append("rsep", ","); // 添加form表单中其他数据
-      param.append("ristitle", "false"); // 添加form表单中其他数据
+      param.append("lsep", ",");
+      param.append("listitle", this.lIsTitle);
+      param.append("lisgbk", this.lIsGBK);
+      param.append("rsep", ",");
+      param.append("ristitle", this.rIsTitle);
+      param.append("risgbk", this.rIsGBK);
       param.append("left", this.leftFile.raw);
       param.append("right", this.rightFile.raw);
       let config = {
@@ -129,12 +184,28 @@ export default {
           "\t"
         );
       });
+      this.isFileSelectLeft = false;
+      this.filenameLeft = "";
+      this.isFileSelectRight = false;
+      this.filenameRight = "";
     },
     leftChange(file) {
       this.leftFile = file;
+      this.isFileSelectLeft = true;
+      this.filenameLeft = file.name;
     },
     rightChange(file) {
       this.rightFile = file;
+      this.isFileSelectRight = true;
+      this.filenameRight = file.name;
+    },
+    clear() {
+      this.leftFile = {};
+      this.rightFile = {};
+      this.isFileSelectLeft = false;
+      this.filenameLeft = "";
+      this.isFileSelectRight = false;
+      this.filenameRight = "";
     }
   }
 };
@@ -147,11 +218,13 @@ export default {
     display: flex;
     width: 400px;
     flex-direction: column;
-    .upload {
-      padding-top: 40px;
+    .select-common {
+      display: flex;
+      justify-content: center;
+      padding: 40px 0px 10px 0px;
     }
     .compare-button {
-      margin: 50px 20px 0px 20px;
+      margin: 10px 20px 0px 20px;
     }
   }
   .comparison-right {
@@ -163,5 +236,15 @@ export default {
       flex-direction: row;
     }
   }
+}
+.avatar-uploader-icon {
+  display: flex;
+  justify-content: center;
+  font-size: 48px;
+  line-height: 165px;
+  color: #8c939d;
+}
+.avatar-filename {
+  margin-top: -20px;
 }
 </style>
