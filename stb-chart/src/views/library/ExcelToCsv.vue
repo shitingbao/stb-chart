@@ -1,32 +1,74 @@
 <template>
   <div>
-    <button @click="downloadExcel">xiazai</button>
-    <a :href="'D:/mygo/src/stbweb/builds/common/assets/FaultCode.csv'"
-      >下载模板</a
-    >
-    <el-upload
-      class="upload-demo"
-      ref="upload"
-      action="/"
-      :on-preview="handlePreview"
-      :on-remove="handleRemove"
-      :on-change="changeFile"
-      :file-list="fileList"
-      :auto-upload="false"
-      multiple
-    >
-      <el-button slot="trigger" size="small" type="primary">选取文件</el-button>
-      <el-button
-        style="margin-left: 10px;"
-        size="small"
-        type="success"
-        @click="submitUpload"
-        >上传到服务器</el-button
+    <el-tabs class="el-tab" v-model="activeName">
+      <el-switch
+        v-model="isOrdinary"
+        active-color="#13ce66"
+        inactive-color="#1E90FF"
+        active-text="高级模式"
+        inactive-text="普通模式"
+        class="switch"
       >
-      <div slot="tip" class="el-upload__tip">
-        只能上传jpg/png文件，且不超过500kb
-      </div>
-    </el-upload>
+      </el-switch>
+
+      <el-tab-pane label="生成csv" name="first">
+        <el-upload
+          v-if="!isOrdinary"
+          class="upload-demo"
+          ref="upload"
+          action="/"
+          :on-preview="handlePreview"
+          :on-remove="handleRemove"
+          :on-change="changeFile"
+          :file-list="fileList"
+          :auto-upload="false"
+          multiple
+        >
+          <el-button slot="trigger" size="small" type="primary"
+            >选取文件</el-button
+          >
+          <el-button
+            style="margin-left: 10px;"
+            size="small"
+            type="success"
+            @click="submitUpload('csv')"
+            >上传到服务器</el-button
+          >
+          <div slot="tip" class="el-upload__tip">
+            只能上传xlsx,csv,txt文件，且不超过20M
+          </div>
+        </el-upload>
+      </el-tab-pane>
+      <el-tab-pane label="生成excel" name="second"
+        >生成excel
+        <el-upload
+          v-if="!isOrdinary"
+          class="upload-demo"
+          ref="upload"
+          action="/"
+          :on-preview="handlePreview"
+          :on-remove="handleRemove"
+          :on-change="changeFile"
+          :file-list="fileList"
+          :auto-upload="false"
+          multiple
+        >
+          <el-button slot="trigger" size="small" type="primary"
+            >选取文件</el-button
+          >
+          <el-button
+            style="margin-left: 10px;"
+            size="small"
+            type="success"
+            @click="submitUpload('excel')"
+            >上传到服务器</el-button
+          >
+          <div slot="tip" class="el-upload__tip">
+            只能上传jpg/png文件，且不超过500kb
+          </div>
+        </el-upload>
+      </el-tab-pane>
+    </el-tabs>
   </div>
 </template>
 <script>
@@ -36,6 +78,8 @@
 export default {
   data() {
     return {
+      isOrdinary: false, //是否是普通选项,false为普通选项
+      activeName: "first", //默认显示哪个卡片
       //upload中用于展示的列表
       fileList: [
         {
@@ -62,20 +106,23 @@ export default {
       this.formFileList.push({ name: file.name, fData: file.raw });
       console.log("change:", file);
     },
-    submitUpload() {
-      // this.$refs.upload.submit();
-      let param = new FormData(); // 创建form对象
+    //默认提交，不考虑分隔符和编码格式
+    submitUpload(createFileType) {
       for (let i = 0; i < this.formFileList.length; i++) {
-        console.log("i:", this.formFileList[i].name);
-        param.append(i + "", this.formFileList[i].fData);
+        let param = new FormData(); // 创建form对象
+        param.append("file", this.formFileList[i].fData);
+        // param.append("sep", "");
+        // param.append("gbk", "");
+        // param.append("createSep", "");
+        // param.append("isCreateGBK", "");
+        param.append("createFileType", createFileType);
+        let config = {
+          headers: { "Content-Type": "multipart/form-data" }
+        };
+        this.$http.post("/export", param, config).then(response => {
+          console.log(response.data);
+        });
       }
-      let config = {
-        headers: { "Content-Type": "multipart/form-data" }
-      };
-      console.log("param:", param);
-      this.$http.post("/export", param, config).then(response => {
-        console.log(response);
-      });
       this.fileList = [];
       this.formFileList = [];
     },
@@ -94,3 +141,11 @@ export default {
   }
 };
 </script>
+<style lang="scss" scoped>
+.el-tab {
+  padding: 0px 30px 0px 30px;
+  .switch {
+    padding-bottom: 10px;
+  }
+}
+</style>
