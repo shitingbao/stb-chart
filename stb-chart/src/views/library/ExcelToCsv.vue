@@ -38,9 +38,9 @@
             只能上传xlsx,csv,txt文件，且不超过20M
           </div>
         </el-upload>
+        <ExcelToCsvCommon fileType="csv" v-if="isOrdinary"></ExcelToCsvCommon>
       </el-tab-pane>
-      <el-tab-pane label="生成excel" name="second"
-        >生成excel
+      <el-tab-pane label="生成excel" name="second">
         <el-upload
           v-if="!isOrdinary"
           class="upload-demo"
@@ -64,9 +64,10 @@
             >上传到服务器</el-button
           >
           <div slot="tip" class="el-upload__tip">
-            只能上传jpg/png文件，且不超过500kb
+            只能上传csv/txt文件，且不超过500kb
           </div>
         </el-upload>
+        <ExcelToCsvCommon fileType="excel" v-if="isOrdinary"></ExcelToCsvCommon>
       </el-tab-pane>
     </el-tabs>
   </div>
@@ -75,7 +76,11 @@
 // import * as d3 from "d3";
 //一般采用第二种方法来处理excel文件
 // import XLSX from "xlsx";
+import ExcelToCsvCommon from "./ExcelToCsvCommon";
 export default {
+  components: {
+    ExcelToCsvCommon
+  },
   data() {
     return {
       isOrdinary: false, //是否是普通选项,false为普通选项

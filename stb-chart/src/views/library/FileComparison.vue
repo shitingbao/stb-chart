@@ -37,6 +37,7 @@
         drag
         action="/"
         :show-file-list="false"
+        :auto-upload="false"
       >
         <i
           v-if="isFileSelectLeft"
@@ -73,6 +74,7 @@
         :show-file-list="false"
         drag
         action="/"
+        :auto-upload="false"
       >
         <i
           v-if="isFileSelectRight"
