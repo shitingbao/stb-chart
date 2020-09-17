@@ -70,6 +70,9 @@
         <ExcelToCsvCommon fileType="excel" v-if="isOrdinary"></ExcelToCsvCommon>
       </el-tab-pane>
     </el-tabs>
+    <div v-for="(item, index) in downFileList" :key="index">
+      <a :href="item.url">{{ item.name }}</a>
+    </div>
   </div>
 </template>
 <script>
@@ -77,6 +80,7 @@
 //一般采用第二种方法来处理excel文件
 // import XLSX from "xlsx";
 import ExcelToCsvCommon from "./ExcelToCsvCommon";
+import axios from "axios";
 export default {
   components: {
     ExcelToCsvCommon
@@ -99,13 +103,13 @@ export default {
         }
       ],
       //表单中要上传的文件
-      formFileList: []
+      formFileList: [],
+      downFileList: []
     };
   },
   methods: {
     downloadExcel() {
-      window.location.href =
-        "D:/mygo/src/stbweb/builds/common/assets/FaultCode.csv";
+      window.location.href = axios.defaults.baseURL + "/assets/FaultCode.csv";
     },
     changeFile(file) {
       this.formFileList.push({ name: file.name, fData: file.raw });
@@ -125,7 +129,20 @@ export default {
           headers: { "Content-Type": "multipart/form-data" }
         };
         this.$http.post("/export", param, config).then(response => {
-          console.log(response.data);
+          if (response.data.success) {
+            console.log(response.data.url);
+            this.downFileList.push({
+              name: response.data.url.split("/")[1],
+              url: axios.defaults.baseURL + "/" + response.data.url
+            });
+          } else {
+            this.$message({
+              showClose: true,
+              message: response.data.msg,
+              type: "error",
+              duration: 2000
+            });
+          }
         });
       }
       this.fileList = [];
@@ -138,7 +155,7 @@ export default {
           return true;
         }
       });
-      this.list.splice(index, 1);
+      this.formFileList.splice(index, 1);
     },
     handlePreview(file) {
       console.log("preview:", file);

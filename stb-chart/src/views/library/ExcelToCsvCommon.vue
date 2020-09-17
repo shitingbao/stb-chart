@@ -72,12 +72,16 @@
     <el-button class="compare-button" type="primary" @click="clear()" plain
       >清空</el-button
     >
+    <div v-for="(item, index) in downFileList" :key="index">
+      <a :href="item.url">{{ item.name }}</a>
+    </div>
   </div>
 </template>
 <script>
 // import * as d3 from "d3";
 //一般采用第二种方法来处理excel文件
 // import XLSX from "xlsx";
+import axios from "axios";
 export default {
   name: "ExcelToCsvCommon",
   props: {
@@ -91,7 +95,8 @@ export default {
       selectFileName: "",
       upIsGBK: false, //上传文件分隔符
       downIsGBK: false, //下载文件分隔符
-      formFile: {} //上传文件
+      formFile: {}, //上传文件
+      downFileList: []
     };
   },
   methods: {
@@ -119,7 +124,21 @@ export default {
         headers: { "Content-Type": "multipart/form-data" }
       };
       this.$http.post("/export", param, config).then(response => {
-        console.log(response.data);
+        // console.log(response.data);
+        if (response.data.success) {
+          // console.log(response.data.url);
+          this.downFileList.push({
+            name: response.data.url.split("/")[1],
+            url: axios.defaults.baseURL + "/" + response.data.url
+          });
+        } else {
+          this.$message({
+            showClose: true,
+            message: response.data.msg,
+            type: "error",
+            duration: 2000
+          });
+        }
       });
       this.isFileSelect = false;
       this.selectFileName = "";
