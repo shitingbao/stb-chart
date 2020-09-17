@@ -1,84 +1,63 @@
 <template>
   <div>
-    <el-tabs class="el-tab" v-model="activeName">
-      <el-switch
-        v-model="isOrdinary"
-        active-color="#13ce66"
-        inactive-color="#1E90FF"
-        active-text="高级模式"
-        inactive-text="普通模式"
-        class="switch"
+    <el-switch
+      v-model="isOrdinary"
+      active-color="#13ce66"
+      inactive-color="#1E90FF"
+      active-text="高级模式"
+      inactive-text="普通模式"
+      class="switch"
+    >
+    </el-switch>
+    <el-switch
+      v-model="isfileType"
+      active-color="#13ce66"
+      inactive-color="#1E90FF"
+      active-text="生成excel"
+      inactive-text="生成csv"
+      class="switch"
+    >
+    </el-switch>
+    <div v-show="!isOrdinary" class="file">
+      <el-upload
+        class="file-up"
+        ref="upload"
+        action="/"
+        :on-remove="handleRemove"
+        :on-change="changeFile"
+        :file-list="fileList"
+        :auto-upload="false"
+        multiple
       >
-      </el-switch>
-
-      <el-tab-pane label="生成csv" name="first">
-        <el-upload
-          v-if="!isOrdinary"
-          class="upload-demo"
-          ref="upload"
-          action="/"
-          :on-preview="handlePreview"
-          :on-remove="handleRemove"
-          :on-change="changeFile"
-          :file-list="fileList"
-          :auto-upload="false"
-          multiple
+        <el-button slot="trigger" size="small" type="primary"
+          >选取文件</el-button
         >
-          <el-button slot="trigger" size="small" type="primary"
-            >选取文件</el-button
-          >
-          <el-button
-            style="margin-left: 10px;"
-            size="small"
-            type="success"
-            @click="submitUpload('csv')"
-            >上传到服务器</el-button
-          >
-          <div slot="tip" class="el-upload__tip">
-            只能上传xlsx,csv,txt文件，且不超过20M
-          </div>
-        </el-upload>
-        <ExcelToCsvCommon fileType="csv" v-if="isOrdinary"></ExcelToCsvCommon>
-      </el-tab-pane>
-      <el-tab-pane label="生成excel" name="second">
-        <el-upload
-          v-if="!isOrdinary"
-          class="upload-demo"
-          ref="upload"
-          action="/"
-          :on-preview="handlePreview"
-          :on-remove="handleRemove"
-          :on-change="changeFile"
-          :file-list="fileList"
-          :auto-upload="false"
-          multiple
+        <el-button
+          style="margin-left: 10px;"
+          size="small"
+          type="success"
+          @click="submitUpload(isfileType ? 'excel' : 'csv')"
+          >上传到服务器</el-button
         >
-          <el-button slot="trigger" size="small" type="primary"
-            >选取文件</el-button
-          >
-          <el-button
-            style="margin-left: 10px;"
-            size="small"
-            type="success"
-            @click="submitUpload('excel')"
-            >上传到服务器</el-button
-          >
-          <div slot="tip" class="el-upload__tip">
-            只能上传csv/txt文件，且不超过500kb
-          </div>
-        </el-upload>
-        <ExcelToCsvCommon fileType="excel" v-if="isOrdinary"></ExcelToCsvCommon>
-      </el-tab-pane>
-    </el-tabs>
-    <div v-for="(item, index) in downFileList" :key="index">
-      <a :href="item.url">{{ item.name }}</a>
+        <div slot="tip" class="el-upload__tip">
+          只能上传xlsx,csv,txt文件，且不超过20M<br />可以多选文件，但是注意同名文件会覆盖
+        </div>
+      </el-upload>
+      <div class="file-line">
+        <h3>下载链接</h3>
+        <div class="line" v-for="(item, index) in downFileList" :key="index">
+          <a :href="item.url">{{ item.name }}</a>
+        </div>
+      </div>
     </div>
+
+    <ExcelToCsvCommon
+      :fileType="isfileType ? 'excel' : 'csv'"
+      v-show="isOrdinary"
+    ></ExcelToCsvCommon>
   </div>
 </template>
 <script>
-// import * as d3 from "d3";
-//一般采用第二种方法来处理excel文件
-// import XLSX from "xlsx";
 import ExcelToCsvCommon from "./ExcelToCsvCommon";
 import axios from "axios";
 export default {
@@ -88,20 +67,10 @@ export default {
   data() {
     return {
       isOrdinary: false, //是否是普通选项,false为普通选项
-      activeName: "first", //默认显示哪个卡片
+      activeName: "csv", //默认显示哪个卡片
+      isfileType: false,
       //upload中用于展示的列表
-      fileList: [
-        {
-          name: "food.jpeg",
-          url:
-            "https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100"
-        },
-        {
-          name: "food2.jpeg",
-          url:
-            "https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100"
-        }
-      ],
+      fileList: [],
       //表单中要上传的文件
       formFileList: [],
       downFileList: []
@@ -113,7 +82,7 @@ export default {
     },
     changeFile(file) {
       this.formFileList.push({ name: file.name, fData: file.raw });
-      console.log("change:", file);
+      // console.log("change:", file);
     },
     //默认提交，不考虑分隔符和编码格式
     submitUpload(createFileType) {
@@ -130,7 +99,7 @@ export default {
         };
         this.$http.post("/export", param, config).then(response => {
           if (response.data.success) {
-            console.log(response.data.url);
+            // console.log(response.data.url);
             this.downFileList.push({
               name: response.data.url.split("/")[1],
               url: axios.defaults.baseURL + "/" + response.data.url
@@ -148,26 +117,40 @@ export default {
       this.fileList = [];
       this.formFileList = [];
     },
-    handleRemove(file, fileList) {
-      console.log("remove:", file, fileList);
+    handleRemove(file) {
+      // console.log("remove:", file, fileList);
       var index = this.formFileList.findIndex(item => {
         if (item.name == file.name) {
           return true;
         }
       });
       this.formFileList.splice(index, 1);
-    },
-    handlePreview(file) {
-      console.log("preview:", file);
     }
+    // handlePreview(file) {
+    //   console.log("preview:", file);
+    // }
   }
 };
 </script>
 <style lang="scss" scoped>
-.el-tab {
-  padding: 0px 30px 0px 30px;
-  .switch {
-    padding-bottom: 10px;
+.switch {
+  padding: 20px 20px;
+}
+.file {
+  display: flex;
+  padding: 0px 200px;
+  .file-up {
+    flex-grow: 5;
+    width: 500px;
+    padding-top: 15px;
+  }
+  .file-line {
+    flex-grow: 2;
+
+    width: 300px;
+    .line {
+      padding: 5px 0px;
+    }
   }
 }
 </style>

@@ -1,79 +1,87 @@
 <template>
-  <div>
-    <div class="description">
-      <h2 class="description-title">使用说明</h2>
-      <ul>
-        <li>在输入或者输出文件采用csv/txt文件时，可选填文件类型信息</li>
-        <li>
-          默认使用的分隔符是英文“ ,
-          ”，在使用其他分隔符时，注意不要和文件内容冲突
-        </li>
-        <li>
-          utf8和gbk代表对应文件编码格式，文本分隔符代表文本文件数据之间的分隔标识
-        </li>
-      </ul>
+  <div class="common">
+    <div class="common-file">
+      <div class="description">
+        <h2 class="description-title">使用说明</h2>
+        <ul>
+          <li>在输入或者输出文件采用csv/txt文件时，可选填文件类型信息</li>
+          <li>
+            默认使用的分隔符是英文“ ,
+            ”，在使用其他分隔符时，注意不要和文件内容冲突
+          </li>
+          <li>
+            utf8和gbk代表对应文件编码格式，文本分隔符代表文本文件数据之间的分隔标识
+          </li>
+        </ul>
+      </div>
+      <h4>文件选择</h4>
+      <div class="select-common">
+        <div class="select-common-tab">
+          <span>上传文件信息（选填）：</span>
+          <el-switch
+            class="switch"
+            v-model="upIsGBK"
+            active-text="gbk"
+            inactive-text="utf8"
+          >
+          </el-switch>
+          <span>文本文件分隔符：</span>
+          <el-input
+            class="tab-input"
+            v-model="upInput"
+            placeholder="请输入内容"
+          ></el-input>
+        </div>
+        <div class="select-common-tab">
+          <span>下载文件信息（选填）：</span>
+          <el-switch
+            class="switch"
+            v-model="downIsGBK"
+            active-text="gbk"
+            inactive-text="utf8"
+          >
+          </el-switch>
+          <span>文本文件分隔符：</span>
+          <el-input
+            class="tab-input"
+            v-model="downInput"
+            placeholder="请输入内容"
+          ></el-input>
+        </div>
+      </div>
+      <el-upload
+        :on-change="changeFile"
+        class="upload"
+        drag
+        action="/"
+        :show-file-list="false"
+        :auto-upload="false"
+      >
+        <i
+          v-if="isFileSelect"
+          class="el-icon-tickets avatar-uploader-icon "
+        ></i>
+        <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+        <div v-if="isFileSelect" class="avatar-filename">
+          {{ selectFileName }}
+        </div>
+      </el-upload>
+      <el-button
+        class="compare-button"
+        type="primary"
+        @click="submitUpload"
+        plain
+        >提交</el-button
+      >
+      <el-button class="compare-button" type="primary" @click="clear()" plain
+        >清空</el-button
+      >
     </div>
-    <h4>文件选择</h4>
-    <div class="select-common">
-      <div class="select-common-tab">
-        <span>上传文件信息（选填）：</span>
-        <el-switch
-          class="switch"
-          v-model="upIsGBK"
-          active-text="gbk"
-          inactive-text="utf8"
-        >
-        </el-switch>
-        <span>文本文件分隔符：</span>
-        <el-input
-          class="tab-input"
-          v-model="upInput"
-          placeholder="请输入内容"
-        ></el-input>
+    <div class="common-line">
+      <h3>下载链接</h3>
+      <div v-for="(item, index) in downFileList" :key="index">
+        <a :href="item.url">{{ item.name }}</a>
       </div>
-      <div class="select-common-tab">
-        <span>下载文件信息（选填）：</span>
-        <el-switch
-          class="switch"
-          v-model="downIsGBK"
-          active-text="gbk"
-          inactive-text="utf8"
-        >
-        </el-switch>
-        <span>文本文件分隔符：</span>
-        <el-input
-          class="tab-input"
-          v-model="downInput"
-          placeholder="请输入内容"
-        ></el-input>
-      </div>
-    </div>
-    <el-upload
-      :on-change="changeFile"
-      class="upload"
-      drag
-      action="/"
-      :show-file-list="false"
-      :auto-upload="false"
-    >
-      <i v-if="isFileSelect" class="el-icon-tickets avatar-uploader-icon "></i>
-      <i v-else class="el-icon-plus avatar-uploader-icon"></i>
-      <div v-if="isFileSelect" class="avatar-filename">
-        {{ selectFileName }}
-      </div>
-    </el-upload>
-    <el-button
-      class="compare-button"
-      type="primary"
-      @click="submitUpload(fileType)"
-      plain
-      >提交</el-button
-    >
-    <el-button class="compare-button" type="primary" @click="clear()" plain
-      >清空</el-button
-    >
-    <div v-for="(item, index) in downFileList" :key="index">
-      <a :href="item.url">{{ item.name }}</a>
     </div>
   </div>
 </template>
@@ -112,14 +120,15 @@ export default {
       this.isFileSelect = true;
     },
     //默认提交，不考虑分隔符和编码格式
-    submitUpload(createFileType) {
+    submitUpload() {
+      // console.log("this.fileType:", this.fileType);
       let param = new FormData(); // 创建form对象
       param.append("file", this.formFile);
       param.append("sep", this.upInput);
       param.append("gbk", this.upIsGBK);
       param.append("createSep", this.downInput);
       param.append("isCreateGBK", this.downIsGBK);
-      param.append("createFileType", createFileType);
+      param.append("createFileType", this.fileType);
       let config = {
         headers: { "Content-Type": "multipart/form-data" }
       };
@@ -148,6 +157,18 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
+.common {
+  display: flex;
+  padding: 0px 100px;
+  .common-file {
+    width: 600px;
+    flex-grow: 1;
+  }
+  .common-line {
+    width: 300px;
+    flex-grow: 1;
+  }
+}
 .description {
   display: flex;
   flex-direction: column;
@@ -158,12 +179,7 @@ export default {
     margin: 0px;
   }
 }
-.el-tab {
-  padding: 0px 30px 0px 30px;
-  .switch {
-    padding-bottom: 10px;
-  }
-}
+
 .select-common {
   display: flex;
   justify-content: center;
