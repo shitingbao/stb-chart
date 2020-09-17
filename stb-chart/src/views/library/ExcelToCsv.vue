@@ -40,7 +40,8 @@
           >上传到服务器</el-button
         >
         <div slot="tip" class="el-upload__tip">
-          只能上传xlsx,csv,txt文件，且不超过20M<br />可以多选文件，但是注意同名文件会覆盖
+          只能上传xlsx,csv,txt文件，且不超过20M<br />可以多选文件，但是注意同名文件会覆盖<br />文本默认使用了英文“
+          , ”作为分隔符，如果正文中出现该符号，则会判断为新的列
         </div>
       </el-upload>
       <div class="file-line">
