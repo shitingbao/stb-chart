@@ -47,7 +47,7 @@
       <div class="file-line">
         <h3>下载链接</h3>
         <div class="line" v-for="(item, index) in downFileList" :key="index">
-          <span @click="download(item.name)">{{ item.name }}</span>
+          <span @click="download(item.url)">{{ item.name }}</span>
         </div>
       </div>
     </div>
@@ -60,7 +60,6 @@
 </template>
 <script>
 import ExcelToCsvCommon from "./ExcelToCsvCommon";
-import axios from "axios";
 export default {
   components: {
     ExcelToCsvCommon
@@ -80,7 +79,7 @@ export default {
   methods: {
     download(base) {
       let config = {
-        headers: { "stbweb-api": "down" }
+        headers: { "stbweb-api": "down", token: localStorage.getItem("token") }
       };
       let param = {
         base: base
@@ -114,7 +113,7 @@ export default {
             // console.log(response.data.url);
             this.downFileList.push({
               name: response.data.url.split("/")[1],
-              url: axios.defaults.baseURL + "/" + response.data.url
+              url: response.data.url
             });
           } else {
             this.$message({
