@@ -82,7 +82,7 @@ export default {
         headers: { "stbweb-api": "down", token: localStorage.getItem("token") }
       };
       let param = {
-        base: base
+        Base: base
       };
       // 添加请求头
       this.$http.post("/down", param, config).then(response => {
