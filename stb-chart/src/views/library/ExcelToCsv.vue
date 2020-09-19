@@ -47,7 +47,7 @@
       <div class="file-line">
         <h3>下载链接</h3>
         <div class="line" v-for="(item, index) in downFileList" :key="index">
-          <a :href="item.url">{{ item.name }}</a>
+          <span @click="download(item.name)">{{ item.name }}</span>
         </div>
       </div>
     </div>
@@ -78,8 +78,19 @@ export default {
     };
   },
   methods: {
-    downloadExcel() {
-      window.location.href = axios.defaults.baseURL + "/assets/FaultCode.csv";
+    download(base) {
+      let config = {
+        headers: { "stbweb-api": "down" }
+      };
+      let param = {
+        base: base
+      };
+      // 添加请求头
+      this.$http.post("/down", param, config).then(response => {
+        if (response.data.success) {
+          return;
+        }
+      });
     },
     changeFile(file) {
       this.formFileList.push({ name: file.name, fData: file.raw });
