@@ -47,7 +47,8 @@
       <div class="file-line">
         <h3>下载链接</h3>
         <div class="line" v-for="(item, index) in downFileList" :key="index">
-          <span @click="download(item.url)">{{ item.name }}</span>
+          <!-- <span @click="download(item.url)">{{ item.name }}</span> -->
+          <a :href="'http://localhost:3002/' + item.url">{{ item.name }}</a>
         </div>
       </div>
     </div>
