@@ -80,7 +80,7 @@
     <div class="common-line">
       <h3>下载链接</h3>
       <div v-for="(item, index) in downFileList" :key="index">
-        <a :href="item.url">{{ item.name }}</a>
+        <a :href="item.url" download>{{ item.name }}</a>
       </div>
     </div>
   </div>

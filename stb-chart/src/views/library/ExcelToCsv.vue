@@ -48,7 +48,7 @@
         <h3>下载链接</h3>
         <div class="line" v-for="(item, index) in downFileList" :key="index">
           <!-- <span @click="download(item.url)">{{ item.name }}</span> -->
-          <a :href="'http://localhost:3002/' + item.url">{{ item.name }}</a>
+          <a :href="item.url" download>{{ item.name }}</a>
         </div>
       </div>
     </div>
@@ -60,6 +60,7 @@
   </div>
 </template>
 <script>
+import axios from "axios";
 import ExcelToCsvCommon from "./ExcelToCsvCommon";
 export default {
   components: {
@@ -114,7 +115,7 @@ export default {
             // console.log(response.data.url);
             this.downFileList.push({
               name: response.data.url.split("/")[1],
-              url: response.data.url
+              url: axios.defaults.baseURL + "/" + response.data.url
             });
           } else {
             this.$message({
