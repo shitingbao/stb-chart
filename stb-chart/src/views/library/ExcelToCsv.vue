@@ -48,7 +48,12 @@
         <h3>下载链接</h3>
         <div class="line" v-for="(item, index) in downFileList" :key="index">
           <!-- <span @click="download(item.url)">{{ item.name }}</span> -->
-          <a :href="item.url" download>{{ item.name }}</a>
+          <!-- <a :href="item.url" download>{{ item.name }}</a> -->
+          <span
+            :href="item.url"
+            @click.prevent="downloadItem(item.url, item.name)"
+            >{{ item.name }}</span
+          >
         </div>
       </div>
     </div>
@@ -79,6 +84,19 @@ export default {
     };
   },
   methods: {
+    downloadItem(url, label) {
+      axios
+        .get(url, { responseType: "blob" })
+        .then(response => {
+          const blob = new Blob([response.data]);
+          const link = document.createElement("a");
+          link.href = URL.createObjectURL(blob);
+          link.download = label;
+          link.click();
+          URL.revokeObjectURL(link.href);
+        })
+        .catch(console.error);
+    },
     download(base) {
       let config = {
         headers: { "stbweb-api": "down", token: localStorage.getItem("token") }
@@ -93,6 +111,7 @@ export default {
         }
       });
     },
+
     changeFile(file) {
       this.formFileList.push({ name: file.name, fData: file.raw });
       // console.log("change:", file);

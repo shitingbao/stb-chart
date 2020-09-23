@@ -80,7 +80,11 @@
     <div class="common-line">
       <h3>下载链接</h3>
       <div v-for="(item, index) in downFileList" :key="index">
-        <a :href="item.url" download>{{ item.name }}</a>
+        <span
+          :href="item.url"
+          @click.prevent="downloadItem(item.url, item.name)"
+          >{{ item.name }}</span
+        >
       </div>
     </div>
   </div>
@@ -113,7 +117,19 @@ export default {
       this.selectFileName = "";
       this.formFile = {};
     },
-
+    downloadItem(url, label) {
+      axios
+        .get(url, { responseType: "blob" })
+        .then(response => {
+          const blob = new Blob([response.data]);
+          const link = document.createElement("a");
+          link.href = URL.createObjectURL(blob);
+          link.download = label;
+          link.click();
+          URL.revokeObjectURL(link.href);
+        })
+        .catch(console.error);
+    },
     changeFile(file) {
       this.formFile = file.raw;
       this.selectFileName = file.name;
