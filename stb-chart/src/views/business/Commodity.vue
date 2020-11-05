@@ -1,7 +1,7 @@
 <template>
   <div class="business">
     <div class="block">
-      <span class="demonstration">广告选择区</span>
+      <span class="demonstration">轮播图</span>
       <el-carousel trigger="click" height="150px" class="carousel">
         <el-carousel-item v-for="item in 4" :key="item">
           <h3 class="small">{{ item }}</h3>
@@ -10,17 +10,20 @@
     </div>
     <div class="select-base">
       <div class="base-title">
-        <span>基础入门</span>
-        <span>从入门到工作经验</span>
+        <span>基础</span>
+        <span>第一类</span>
       </div>
-      <div>图片选择</div>
+      <div class="base-list">
+        <div @click="chat">在线交友</div>
+        <div @click="commoditylist">商品优选</div>
+        <div>学习教材</div>
+        <div>关于我们</div>
+      </div>
     </div>
     <div class="select-expand">
       <div class="expand-title">
-        <span>学习路线</span>
-        <span>目录选择栏</span>
+        <span>介绍</span>
       </div>
-      <div>show</div>
     </div>
   </div>
 </template>
@@ -35,7 +38,17 @@ export default {
   },
   mounted() {},
   created: function() {},
-  methods: {}
+  methods: {
+    commoditylist() {
+      // this.$router.push({ name: "commoditylist" });
+      let routeData = this.$router.resolve({ name: "commoditylist" });
+      window.open(routeData.href, "_blank");
+    },
+    chat() {
+      let routeData = this.$router.resolve({ name: "chathome" });
+      window.open(routeData.href, "_blank");
+    }
+  }
 };
 </script>
 <style lang="scss">
@@ -48,6 +61,16 @@ export default {
   .carousel {
     width: 1200px;
     justify-content: center;
+  }
+  .base-list {
+    display: flex;
+    flex-direction: row;
+    div {
+      margin: 20px 20px 20px 20px;
+      width: 200px;
+      height: 200px;
+      cursor: pointer;
+    }
   }
 }
 .el-carousel__item h3 {

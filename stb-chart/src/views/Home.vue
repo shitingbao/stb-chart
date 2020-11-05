@@ -10,48 +10,48 @@
       active-text-color="#ffd04b"
     >
       <el-menu-item index="commodity">主页</el-menu-item>
-      <!-- <el-submenu index="2">
-        <template slot="title">功能选择项</template>
-        <el-menu-item index="chatroom">聊天室</el-menu-item>
+      <el-submenu index="2">
+        <template slot="title">辅助功能选择项</template>
+        <!-- <el-menu-item index="chatroom">聊天室</el-menu-item> -->
         <el-menu-item index="imageupload">图片文字提取</el-menu-item>
         <el-menu-item index="comparison">文件内容比较</el-menu-item>
         <el-menu-item index="excelToCsv">excelToCsv</el-menu-item>
-        <el-menu-item index="test">test</el-menu-item>
-        <el-submenu index="2-4">
+        <!-- <el-menu-item index="test">test</el-menu-item> -->
+        <!-- <el-submenu index="2-4">
           <template slot="title">待定0</template>
           <el-menu-item index="2-4-1">待定1</el-menu-item>
           <el-menu-item index="2-4-2">待定2</el-menu-item>
           <el-menu-item index="2-4-3">待定3</el-menu-item>
-        </el-submenu>
-      </el-submenu> -->
+        </el-submenu> -->
+      </el-submenu>
       <!-- <el-menu-item index="3" disabled>消息中心</el-menu-item> -->
       <el-menu-item index="4">
-        <span>用户管理</span>
+        <span>控制台</span>
       </el-menu-item>
     </el-menu>
     <div class="library">
-      <!-- <ChatRoom v-if="selectPage === 'chatroom'"></ChatRoom>
+      <!-- <ChatRoom v-if="selectPage === 'chatroom'"></ChatRoom> -->
       <ImageUpload v-if="selectPage === 'imageupload'"></ImageUpload>
       <FileComparison v-if="selectPage === 'comparison'"></FileComparison>
-      <Test v-if="selectPage === 'test'"></Test>
-      <ExcelToCsv v-if="selectPage == 'excelToCsv'"></ExcelToCsv> -->
+      <!-- <Test v-if="selectPage === 'test'"></Test> -->
+      <ExcelToCsv v-if="selectPage == 'excelToCsv'"></ExcelToCsv>
       <Commodity v-if="selectPage == 'commodity'"></Commodity>
     </div>
   </div>
 </template>
 <script>
 // import ChatRoom from "./library/ChatRoom";
-// import ImageUpload from "./library/ImageUpload";
-// import FileComparison from "./library/FileComparison";
+import ImageUpload from "./library/ImageUpload";
+import FileComparison from "./library/FileComparison";
 // import Test from "./library/Test";
-// import ExcelToCsv from "./library/ExcelToCsv";
+import ExcelToCsv from "./library/ExcelToCsv";
 import Commodity from "./business/Commodity";
 export default {
   components: {
-    // ExcelToCsv,
+    ExcelToCsv,
     // ChatRoom,
-    // ImageUpload,
-    // FileComparison,
+    ImageUpload,
+    FileComparison,
     Commodity
     // Test
   },
