@@ -112,7 +112,7 @@ export default {
             resData.push(response.data[j].words_result[i].Words);
           }
         }
-        that.content = JSON.stringify(response.data, null, "\t");
+        that.content = JSON.stringify(resData, null, "\t");
         let num = this.selectSameFile(this.filename);
         let named = this.filename; //不直接使用文件名，如果遇到相同文件名称已经存在，就文件名后+1.如：新建文件夹（1）
         if (num > 0) {
