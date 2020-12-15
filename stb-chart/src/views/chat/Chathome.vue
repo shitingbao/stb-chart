@@ -97,22 +97,6 @@ export default {
           homeType: "test1",
           num: 5,
           maxNum: 8
-        },
-        {
-          homeID: "test1",
-          homeName: "test1",
-          homeCommon: "test1",
-          homeType: "test1",
-          num: 5,
-          maxNum: 8
-        },
-        {
-          homeID: "test1",
-          homeName: "test1",
-          homeCommon: "test1",
-          homeType: "test1",
-          num: 5,
-          maxNum: 8
         }
       ]
     };
@@ -122,7 +106,8 @@ export default {
   methods: {
     intoRoom(item) {
       console.log("item", item);
-    }
+    },
+    getRoomList() {}
   }
 };
 </script>

@@ -35,7 +35,7 @@
       <FileComparison v-if="selectPage === 'comparison'"></FileComparison>
       <!-- <Test v-if="selectPage === 'test'"></Test> -->
       <ExcelToCsv v-if="selectPage == 'excelToCsv'"></ExcelToCsv>
-      <Commodity v-if="selectPage == 'commodity'"></Commodity>
+      <Index v-if="selectPage == 'index'"></Index>
     </div>
   </div>
 </template>
@@ -45,20 +45,20 @@ import ImageUpload from "./library/ImageUpload";
 import FileComparison from "./library/FileComparison";
 // import Test from "./library/Test";
 import ExcelToCsv from "./library/ExcelToCsv";
-import Commodity from "./business/Commodity";
+import Index from "./library/Index";
 export default {
   components: {
     ExcelToCsv,
     // ChatRoom,
     ImageUpload,
     FileComparison,
-    Commodity
+    Index
     // Test
   },
   data() {
     return {
       activeIndex: "1",
-      selectPage: "commodity"
+      selectPage: "index"
     };
   },
   mounted() {},
