@@ -9,7 +9,7 @@
       text-color="#fff"
       active-text-color="#ffd04b"
     >
-      <el-menu-item index="commodity">主页</el-menu-item>
+      <el-menu-item index="index">主页</el-menu-item>
       <el-submenu index="2">
         <template slot="title">辅助功能选择项</template>
         <!-- <el-menu-item index="chatroom">聊天室</el-menu-item> -->

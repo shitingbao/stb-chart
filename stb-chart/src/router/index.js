@@ -4,7 +4,7 @@ import Home from "../views/Home.vue";
 import Login from "../views/Login.vue";
 import Commoditylist from "../views/business/Commoditylist.vue";
 import Chathome from "../views/chat/Chathome.vue";
-
+import ChatUnit from "../views/chat/ChatUnit.vue";
 Vue.use(VueRouter);
 
 const routes = [
@@ -32,6 +32,11 @@ const routes = [
     path: "/chathome",
     name: "chathome",
     component: Chathome
+  },
+  {
+    path: "/chatunit",
+    name: "chatunit",
+    component: ChatUnit
   }
 ];
 

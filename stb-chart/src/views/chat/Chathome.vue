@@ -16,13 +16,15 @@
             <div
               v-for="(item, index) in homelist"
               :key="index"
-              @click="intoRoom"
+              @click="intoRoom(item)"
               class="chat-body-room"
             >
-              <span>房间名称:{{ item.homeName }}</span>
-              <span>人数:{{ item.num }} /{{ item.maxNum }}</span>
-              <span>房间类型:{{ item.homeType }}</span>
-              <span>简介:{{ item.homeCommon }}</span>
+              <span>房间ID:{{ item.room_id }}</span>
+              <span>房间名称:{{ item.room_name }}</span
+              ><span>房主:{{ item.host_name }}</span>
+              <span>人数:0 /{{ item.max }}</span>
+              <span>房间类型:{{ item.room_type }}</span>
+              <span>简介:{{ item.common }}</span>
             </div>
           </div>
         </div>
@@ -31,7 +33,7 @@
     </div>
     <div class="flex-item">
       <div style="height:120px;line-height:100px;">
-        <button>换一批</button>
+        <button @click="randSelect">换一批</button>
       </div>
     </div>
   </div>
@@ -41,73 +43,42 @@ export default {
   components: {},
   data() {
     return {
-      homelist: [
-        {
-          homeID: "test1",
-          homeName: "test1",
-          homeCommon: "test1",
-          homeType: "test1",
-          num: 5,
-          maxNum: 8
-        },
-        {
-          homeID: "test1",
-          homeName: "test1",
-          homeCommon: "test1",
-          homeType: "test1",
-          num: 5,
-          maxNum: 8
-        },
-        {
-          homeID: "test1",
-          homeName: "test1",
-          homeCommon: "test1",
-          homeType: "test1",
-          num: 5,
-          maxNum: 8
-        },
-        {
-          homeID: "test1",
-          homeName: "test1",
-          homeCommon: "test1",
-          homeType: "test1",
-          num: 5,
-          maxNum: 8
-        },
-        {
-          homeID: "test1",
-          homeName: "test1",
-          homeCommon: "test1",
-          homeType: "test1",
-          num: 5,
-          maxNum: 8
-        },
-        {
-          homeID: "test1",
-          homeName: "test1",
-          homeCommon: "test1",
-          homeType: "test1",
-          num: 5,
-          maxNum: 8
-        },
-        {
-          homeID: "test1",
-          homeName: "test1",
-          homeCommon: "test1",
-          homeType: "test1",
-          num: 5,
-          maxNum: 8
-        }
-      ]
+      homelist: []
     };
   },
-  mounted() {},
+  mounted() {
+    this.randSelect();
+  },
   created: function() {},
   methods: {
     intoRoom(item) {
-      console.log("item", item);
+      localStorage.setItem("roomid", item.room_id);
+      this.$router.push({ name: "chatunit" });
     },
-    getRoomList() {}
+    getRoomList() {},
+    randSelect() {
+      let roomIDList = [];
+      this.homelist.forEach(e => {
+        roomIDList.push(e.room_id);
+      });
+      let config = {
+        headers: {
+          "stbweb-api": "randselect",
+          token: localStorage.getItem("token")
+        }
+      };
+      let param = {
+        RoomID: roomIDList
+      };
+      // 添加请求头
+      this.$http.post("/chat", param, config).then(response => {
+        if (response.data.success) {
+          console.log(response.data.data);
+          this.homelist = response.data.data;
+          return;
+        }
+      });
+    }
   }
 };
 </script>

@@ -46,7 +46,7 @@
 
 <script>
 export default {
-  name: "ChatRoom",
+  name: "ChatUnit",
   props: {
     msg: String
   },
@@ -54,7 +54,7 @@ export default {
     return {
       reconnect: false,
       word: "",
-      host: "124.70.156.31:3002/sockets/chat",
+      host: "localhost:3002/room/chat",
       userWord: [
         { User: "shitingbao", DateTime: "2020-09-11", Data: "123" },
         {
@@ -83,7 +83,9 @@ export default {
         spinner: "el-icon-loading",
         background: "rgba(0, 0, 0, 0.7)"
       });
-      this.initWebSocket(localStorage.getItem("token"));
+      this.initWebSocket(
+        localStorage.getItem("token") + "&" + localStorage.getItem("roomid")
+      );
       setTimeout(() => {
         loading.close();
         this.reconnect = false;
@@ -102,10 +104,10 @@ export default {
       this.sendSock(ts);
     },
     //new WebSocket的第二个参数为特殊参数，后台另外处理
-    initWebSocket(user) {
+    initWebSocket(sec) {
       var that = this;
       var wsuri = "ws://" + this.host;
-      this.websock = new WebSocket(wsuri, user);
+      this.websock = new WebSocket(wsuri, sec);
       this.websock.onmessage = function(e) {
         // console.log("接收的数据为：", e.data.User);
         that.userWord.push(JSON.parse(e.data));
@@ -154,7 +156,9 @@ export default {
     }
   },
   mounted() {
-    this.initWebSocket(localStorage.getItem("token"));
+    let sec =
+      localStorage.getItem("token") + "&" + localStorage.getItem("roomid"); //注意这个间隔符，websocket中的sec参数不能用分号等特殊符号
+    this.initWebSocket(sec);
     this.username = localStorage.getItem("username");
   }
 };
