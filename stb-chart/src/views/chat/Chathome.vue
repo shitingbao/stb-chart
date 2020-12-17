@@ -3,7 +3,8 @@
     <div class="flex-item">
       <div style="height:80px;line-height:100px;" class="chat-title">
         <div>刷新</div>
-        <div>create room</div>
+        <el-button type="text" @click="opendialog">create room</el-button>
+
         <div>host infomations</div>
         <div>添加标签</div>
         <div>确定搜索</div>
@@ -16,7 +17,7 @@
             <div
               v-for="(item, index) in homelist"
               :key="index"
-              @click="intoRoom(item)"
+              @click="intoRoom(item.room_id)"
               class="chat-body-room"
             >
               <span>房间ID:{{ item.room_id }}</span>
@@ -36,6 +37,22 @@
         <button @click="randSelect">换一批</button>
       </div>
     </div>
+    <el-dialog
+      title="创建房间"
+      :visible.sync="dialogVisible"
+      width="30%"
+      :before-close="handleClose"
+    >
+      NumTotle
+      <el-input v-model="NumTotle" placeholder="总人数"></el-input>
+      RoomType<el-input v-model="RoomType" placeholder="房间类型"></el-input>
+      Common
+      <el-input v-model="Common" placeholder="简介"></el-input>
+      <span slot="footer" class="dialog-footer">
+        <el-button @click="dialogVisible = false">取 消</el-button>
+        <el-button type="primary" @click="createRoom">确 定</el-button>
+      </span>
+    </el-dialog>
   </div>
 </template>
 <script>
@@ -43,7 +60,11 @@ export default {
   components: {},
   data() {
     return {
-      homelist: []
+      homelist: [],
+      dialogVisible: false,
+      NumTotle: 3,
+      RoomType: "",
+      Common: ""
     };
   },
   mounted() {
@@ -51,9 +72,41 @@ export default {
   },
   created: function() {},
   methods: {
-    intoRoom(item) {
-      localStorage.setItem("roomid", item.room_id);
+    handleClose() {
+      // this.$confirm("确认关闭？")
+      //   .then(_ => {
+      //     done();
+      //   })
+      //   .catch(_ => {});
+    },
+    intoRoom(room_id) {
+      localStorage.setItem("roomid", room_id);
       this.$router.push({ name: "chatunit" });
+    },
+    opendialog() {
+      this.dialogVisible = true;
+    },
+    createRoom() {
+      this.dialogVisible = false;
+      let config = {
+        headers: {
+          "stbweb-api": "create",
+          token: localStorage.getItem("token")
+        }
+      };
+      let param = {
+        RoomName: localStorage.getItem("username"),
+        NumTotle: this.NumTotle,
+        RoomType: this.RoomType,
+        Common: this.Common
+      };
+      // 添加请求头
+      this.$http.post("/chat", param, config).then(response => {
+        if (response.data.success) {
+          this.intoRoom(response.data.room_id);
+          return;
+        }
+      });
     },
     getRoomList() {},
     randSelect() {
@@ -73,7 +126,6 @@ export default {
       // 添加请求头
       this.$http.post("/chat", param, config).then(response => {
         if (response.data.success) {
-          console.log(response.data.data);
           this.homelist = response.data.data;
           return;
         }

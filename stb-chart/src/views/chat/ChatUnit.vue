@@ -40,6 +40,7 @@
     <div class="footer">
       <el-input v-model="word" placeholder="内容"></el-input>
       <el-button type="primary" @click="send()" plain>发送</el-button>
+      <el-button type="primary" @click="outroom()" plain>退出房间</el-button>
     </div>
   </div>
 </template>
@@ -75,6 +76,10 @@ export default {
     };
   },
   methods: {
+    outroom() {
+      this.websock.close();
+      this.$router.push({ name: "chathome" });
+    },
     //重新连接
     reConnect() {
       const loading = this.$loading({
@@ -150,6 +155,7 @@ export default {
     websocketclose(e) {
       this.reconnect = true;
       console.log("connection closed (" + e.code + ")");
+      // this.$router.push({ name: "chathome" });
     },
     websocketOpen() {
       this.reconnect = false;

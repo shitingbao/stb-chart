@@ -11,6 +11,7 @@ import "element-ui/lib/theme-chalk/index.css";
 import Vue2Editor from "vue2-editor";
 
 axios.defaults.baseURL = "http://localhost:3002";
+// axios.defaults.baseURL = "http://124.70.156.31:3002";
 // axios.headers = { "Content-Type": "application/x-www-form-urlencoded" };
 Vue.use(Vue2Editor);
 Vue.use(ElementUI);
