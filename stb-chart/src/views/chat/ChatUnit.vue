@@ -99,6 +99,7 @@ export default {
       let ts = {
         User: localStorage.getItem("username"),
         Data: this.word,
+        RoomID: localStorage.getItem("roomid"),
         DateTime: new Date()
       };
       this.sendSock(ts);
