@@ -96,7 +96,7 @@ export default {
       };
       let param = {
         RoomName: localStorage.getItem("username"),
-        NumTotle: this.NumTotle,
+        NumTotle: parseInt(this.NumTotle),
         RoomType: this.RoomType,
         Common: this.Common
       };

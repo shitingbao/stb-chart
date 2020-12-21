@@ -53,8 +53,10 @@ export default {
   },
   data() {
     return {
+      roomid: "",
       reconnect: false,
       word: "",
+      // host: "124.70.156.31:3002/room/chat",
       host: "localhost:3002/room/chat",
       userWord: [
         { User: "shitingbao", DateTime: "2020-09-11", Data: "123" },
@@ -77,6 +79,18 @@ export default {
   },
   methods: {
     outroom() {
+      let config = {
+        headers: {
+          "stbweb-api": "leave",
+          token: localStorage.getItem("token")
+        },
+        params: { roomid: this.roomid }
+      };
+      // 添加请求头
+      this.$http.get("/chat", config).then(response => {
+        console.log("err:", response.data);
+      });
+
       this.websock.close();
       this.$router.push({ name: "chathome" });
     },
@@ -88,9 +102,7 @@ export default {
         spinner: "el-icon-loading",
         background: "rgba(0, 0, 0, 0.7)"
       });
-      this.initWebSocket(
-        localStorage.getItem("token") + "&" + localStorage.getItem("roomid")
-      );
+      this.initWebSocket(localStorage.getItem("token") + "&" + this.roomid);
       setTimeout(() => {
         loading.close();
         this.reconnect = false;
@@ -104,7 +116,7 @@ export default {
       let ts = {
         User: localStorage.getItem("username"),
         Data: this.word,
-        RoomID: localStorage.getItem("roomid"),
+        RoomID: this.roomid,
         DateTime: new Date()
       };
       this.sendSock(ts);
@@ -126,7 +138,7 @@ export default {
       };
       //连接发生错误的回调方法
       this.websock.onerror = function() {
-        console.log("WebSocket连接发生错误");
+        this.$message.error("连接失败");
         this.reconnect = true;
       };
     },
@@ -163,8 +175,8 @@ export default {
     }
   },
   mounted() {
-    let sec =
-      localStorage.getItem("token") + "&" + localStorage.getItem("roomid"); //注意这个间隔符，websocket中的sec参数不能用分号等特殊符号
+    this.roomid = localStorage.getItem("roomid");
+    let sec = localStorage.getItem("token") + "&" + this.roomid; //注意这个间隔符，websocket中的sec参数不能用分号等特殊符号
     this.initWebSocket(sec);
     this.username = localStorage.getItem("username");
   }
